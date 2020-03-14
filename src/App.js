@@ -7,6 +7,10 @@ import 'react-date-range/dist/theme/default.css';
 import { DateRange } from 'react-date-range';
 
 class App extends React.Component {
+  minDate = data => new Date(Math.min(...data.map(record => record.date)));
+
+  maxDate = data => new Date(Math.max(...data.map(record => record.date)));
+
   async componentDidMount() {
     const response = await axios.get('/geodist.csv');
     parse(response.data, (err, output) => {
@@ -22,8 +26,8 @@ class App extends React.Component {
       this.setState({
         datePickerVisible: false,
         dateRange: {
-          startDate: new Date(Math.min(...data.map(record => record.date))),
-          endDate: new Date(Math.max(...data.map(record => record.date)))
+          startDate: this.minDate(data),
+          endDate: this.maxDate(data)
         },
         data
       });
@@ -56,6 +60,8 @@ class App extends React.Component {
           {this.state.datePickerVisible && <DateRange
             onChange={item => this.setState({ dateRange: item.range1 })}
             ranges={[this.state.dateRange]}
+            minDate={this.minDate(this.state.data)}
+            maxDate={this.maxDate(this.state.data)}
           />}
           <table className="table">
             <thead>
