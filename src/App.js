@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import parse from 'csv-parse'
+import parse from 'csv-parse';
+
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { DateRange } from 'react-date-range';
 
 class App extends React.Component {
-  state = { data: null };
-
   async componentDidMount() {
     const response = await axios.get('/geodist.csv');
     parse(response.data, (err, output) => {
@@ -17,24 +19,65 @@ class App extends React.Component {
           deaths: +record[3]
         };
       });
-      console.log(data);
-      this.setState({ data });
+      this.setState({
+        datePickerVisible: false,
+        dateRange: {
+          startDate: new Date(Math.min(...data.map(record => record.date))),
+          endDate: new Date(Math.max(...data.map(record => record.date)))
+        },
+        data
+      });
     });
   }
 
   byCountry(data) {
     return data.reduce((acc, cur) => {
-      (acc[cur.country] = acc[cur.country] || []).push(cur);
+      const value = acc[cur.country] || { newCases: 0, deaths: 0 };
+      acc[cur.country] = { newCases: value.newCases + cur.newCases, deaths: value.deaths + cur.deaths };
       return acc;
     }, {});
   }
 
-  renderData() {
-    if (this.state.data) {
+  renderContent() {
+    if (this.state) {
+      const byCountry = this.byCountry(this.state.data.filter(record =>
+        record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate));
+
       return (
-        <ul>
-          {Object.keys(this.byCountry(this.state.data)).map(country => <li>{country}</li>)}
-        </ul>
+        <div>
+          <div className="row justify-content-between">
+            <div className="col-auto">{this.state.dateRange.startDate.toLocaleDateString()} &ndash; {this.state.dateRange.endDate.toLocaleDateString()}</div>
+            <div className="col-auto">
+              <a href="#" onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}>
+                {this.state.datePickerVisible ? 'Hide date picker' : 'Show date picker'}
+              </a>
+            </div>
+          </div>
+          {this.state.datePickerVisible && <DateRange
+            onChange={item => this.setState({ dateRange: item.range1 })}
+            ranges={[this.state.dateRange]}
+          />}
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th>New cases</th>
+                <th>Deaths</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(byCountry)
+                .filter(([key, value]) => value.newCases !== 0 || value.deaths !== 0)
+                .map(([key, value]) => (
+                  <tr key={key}>
+                    <td>{key}</td>
+                    <td>{value.newCases}</td>
+                    <td>{value.deaths}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       );
     } else {
       return <p>Loading data ...</p>;
@@ -43,9 +86,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <h1>COVID-19 by country</h1>
-        {this.state.data === null ? 'Loading data ...' : this.renderData()}
+        {this.renderContent()}
       </div>
     );
   }
