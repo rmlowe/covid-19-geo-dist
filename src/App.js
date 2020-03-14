@@ -89,7 +89,11 @@ class App extends React.Component {
       <div className="App container">
         <h1>COVID-19 by country</h1>
         {this.renderContent()}
-      </div>
+        <footer class="page-footer">
+          Site by <a href="https://blog.rmlowe.com/">Robert Lowe</a>;
+          data from <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+        </footer>
+      </div >
     );
   }
 }
