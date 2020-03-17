@@ -98,6 +98,8 @@ class App extends React.Component {
         <footer class="page-footer">
           Site by <a href="https://blog.rmlowe.com/">Robert Lowe</a>;
           data from <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+          <br />
+          Testing CloudFront cache invalidation
         </footer>
       </div >
     );
