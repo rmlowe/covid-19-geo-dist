@@ -52,9 +52,9 @@ class App extends React.Component {
           <div className="row justify-content-between">
             <div className="col-auto">{this.state.dateRange.startDate.toLocaleDateString()} &ndash; {this.state.dateRange.endDate.toLocaleDateString()}</div>
             <div className="col-auto">
-              <a href="#" onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}>
+              <button type="button" className="btn btn-primary" onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}>
                 {this.state.datePickerVisible ? 'Hide date picker' : 'Show date picker'}
-              </a>
+              </button>
             </div>
           </div>
           {this.state.datePickerVisible && <DateRange
