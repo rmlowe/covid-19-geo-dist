@@ -18,9 +18,9 @@ class App extends React.Component {
         const dateParts = record[0].split('/');
         return {
           date: new Date(dateParts[2], dateParts[1] - 1, dateParts[0]),
-          country: record[1],
-          newCases: +record[2],
-          deaths: +record[3]
+          country: record[6].replace(/_/g, ' '),
+          newCases: +record[4],
+          deaths: +record[5]
         };
       });
       this.setState({
@@ -98,8 +98,6 @@ class App extends React.Component {
         <footer class="page-footer">
           Site by <a href="https://blog.rmlowe.com/">Robert Lowe</a>;
           data from <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
-          <br />
-          Testing CloudFront cache invalidation
         </footer>
       </div >
     );
