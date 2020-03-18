@@ -15,9 +15,8 @@ class App extends React.Component {
     const response = await axios.get('/geodist.csv');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
-        const dateParts = record[0].split('/');
         return {
-          date: new Date(dateParts[2], dateParts[1] - 1, dateParts[0]),
+          date: new Date(record[3], record[2] - 1, record[1]),
           country: record[6].replace(/_/g, ' '),
           newCases: +record[4],
           deaths: +record[5]
