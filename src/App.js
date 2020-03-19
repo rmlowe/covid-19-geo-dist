@@ -17,7 +17,8 @@ class App extends React.Component {
       const data = output.slice(1).map(record => {
         return {
           date: new Date(record[3], record[2] - 1, record[1]),
-          country: record[6].replace(/_/g, ' '),
+          countryName: record[6].replace(/_/g, ' '),
+          countryCode: record[7],
           newCases: +record[4],
           deaths: +record[5]
         };
@@ -35,8 +36,14 @@ class App extends React.Component {
 
   byCountry(data) {
     return data.reduce((acc, cur) => {
-      const value = acc[cur.country] || { newCases: 0, deaths: 0 };
-      acc[cur.country] = { newCases: value.newCases + cur.newCases, deaths: value.deaths + cur.deaths };
+      const oldValue = acc[cur.countryCode];
+      acc[cur.countryCode] = oldValue ? {
+        date: oldValue.date,
+        countryName: oldValue.countryName,
+        countryCode: oldValue.countryCode,
+        newCases: oldValue.newCases + cur.newCases,
+        deaths: oldValue.deaths + cur.deaths
+      } : cur;
       return acc;
     }, {});
   }
@@ -66,18 +73,18 @@ class App extends React.Component {
             <thead>
               <tr>
                 <th>Country</th>
-                <th>New cases</th>
+                <th>New</th>
                 <th>Deaths</th>
               </tr>
             </thead>
             <tbody>
-              {Object.entries(byCountry)
-                .filter(([key, value]) => value.newCases !== 0 || value.deaths !== 0)
-                .map(([key, value]) => (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{value.newCases}</td>
-                    <td>{value.deaths}</td>
+              {Object.values(byCountry)
+                .filter(value => value.newCases !== 0 || value.deaths !== 0)
+                .map(value => (
+                  <tr key={value.countryCode}>
+                    <td>{value.countryName}</td>
+                    <td>{new Intl.NumberFormat().format(value.newCases)}</td>
+                    <td>{new Intl.NumberFormat().format(value.deaths)}</td>
                   </tr>
                 ))}
             </tbody>
