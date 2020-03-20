@@ -46,20 +46,23 @@ class App extends React.Component {
     }, {});
   }
 
+  numericColumn = (name, propKey) => ({
+    name,
+    formatter: row => new Intl.NumberFormat().format(row[propKey]),
+    alignRight: true
+  });
+
   columns = [
     {
       name: 'Country',
-      formatter: row => row.countryName
+      formatter: row => row.countryName,
+      alignRight: false
     },
-    {
-      name: 'New',
-      formatter: row => new Intl.NumberFormat().format(row.newCases)
-    },
-    {
-      name: 'Deaths',
-      formatter: row => new Intl.NumberFormat().format(row.deaths)
-    }
+    this.numericColumn('New', 'newCases'),
+    this.numericColumn('Deaths', 'deaths')
   ]
+
+  columnClassName = column => column.alignRight ? 'text-right' : 'text-left';
 
   renderContent() {
     if (this.state) {
@@ -84,12 +87,16 @@ class App extends React.Component {
           />}
           <table className="table">
             <thead>
-              <tr>{this.columns.map((column, index) => <th key={index}>{column.name}</th>)}</tr>
+              <tr>{this.columns.map((column, index) => <th className={this.columnClassName(column)} key={index}>{column.name}</th>)}</tr>
             </thead>
             <tbody>
               {Object.entries(byCountryCode)
                 .map(([key, value]) => (
-                  <tr key={key}>{this.columns.map((column, index) => <td key={index}>{column.formatter(value)}</td>)}</tr>
+                  <tr key={key}>
+                    {this.columns.map((column, index) => (
+                      <td className={this.columnClassName(column)} key={index}>{column.formatter(value)}</td>
+                    ))}
+                  </tr>
                 ))}
             </tbody>
           </table>
