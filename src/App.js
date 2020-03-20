@@ -29,7 +29,8 @@ class App extends React.Component {
           startDate: this.minDate(data),
           endDate: this.maxDate(data)
         },
-        data
+        data,
+        sortedBy: 1
       });
     });
   }
@@ -49,14 +50,18 @@ class App extends React.Component {
   numericColumn = (name, propKey) => ({
     name,
     formatter: row => new Intl.NumberFormat().format(row[propKey]),
-    alignRight: true
+    alignRight: true,
+    comparator: (a, b) => b[propKey] - a[propKey],
+    sortDescending: true
   });
 
   columns = [
     {
       name: 'Country',
       formatter: row => row.countryName,
-      alignRight: false
+      alignRight: false,
+      comparator: (a, b) => a.countryName.localeCompare(b.countryName),
+      sortDescending: false
     },
     this.numericColumn('New', 'newCases'),
     this.numericColumn('Deaths', 'deaths')
@@ -74,7 +79,7 @@ class App extends React.Component {
           <div className="row justify-content-between">
             <div className="col-auto">{this.state.dateRange.startDate.toLocaleDateString()} &ndash; {this.state.dateRange.endDate.toLocaleDateString()}</div>
             <div className="col-auto">
-              <button type="button" className="btn btn-primary" onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}>
+              <button className="btn btn-primary py-0" onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}>
                 {this.state.datePickerVisible ? 'Hide date picker' : 'Show date picker'}
               </button>
             </div>
@@ -87,10 +92,23 @@ class App extends React.Component {
           />}
           <table className="table">
             <thead>
-              <tr>{this.columns.map((column, index) => <th className={this.columnClassName(column)} key={index}>{column.name}</th>)}</tr>
+              <tr>{this.columns.map((column, index) =>
+                <th className={this.columnClassName(column)} key={index}>{
+                  index === this.state.sortedBy ?
+                    <button className="btn btn-link m-0 p-0 text-nowrap">
+                      <b>{column.name}</b> <i className={'fas ' + (column.sortDescending ? 'fa-sort-down' : 'fa-sort-up')}></i>
+                    </button> :
+                    <button
+                      className="btn btn-link m-0 p-0"
+                      onClick={event => this.setState({ sortedBy: index })}>
+                      {column.name}
+                    </button>
+                }</th>
+              )}</tr>
             </thead>
             <tbody>
               {Object.entries(byCountryCode)
+                .sort(([key1, value1], [key2, value2]) => this.columns[this.state.sortedBy].comparator(value1, value2))
                 .map(([key, value]) => (
                   <tr key={key}>
                     {this.columns.map((column, index) => (
