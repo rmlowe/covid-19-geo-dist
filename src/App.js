@@ -36,13 +36,11 @@ class App extends React.Component {
 
   byCountry(data) {
     return data.reduce((acc, cur) => {
-      const oldValue = acc[cur.countryCode];
-      acc[cur.countryCode] = oldValue ? {
-        date: oldValue.date,
-        countryName: oldValue.countryName,
-        countryCode: oldValue.countryCode,
-        newCases: oldValue.newCases + cur.newCases,
-        deaths: oldValue.deaths + cur.deaths
+      const prevValue = acc[cur.countryCode];
+      acc[cur.countryCode] = prevValue ? {
+        countryName: prevValue.countryName,
+        newCases: prevValue.newCases + cur.newCases,
+        deaths: prevValue.deaths + cur.deaths
       } : cur;
       return acc;
     }, {});
