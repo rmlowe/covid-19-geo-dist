@@ -34,7 +34,7 @@ class App extends React.Component {
     });
   }
 
-  byCountry(data) {
+  byCountryCode(data) {
     return data.reduce((acc, cur) => {
       const prevValue = acc[cur.countryCode];
       acc[cur.countryCode] = prevValue ? {
@@ -46,9 +46,27 @@ class App extends React.Component {
     }, {});
   }
 
+  numericColumn = (name, propKey) => ({
+    name,
+    formatter: row => new Intl.NumberFormat().format(row[propKey]),
+    alignRight: true
+  });
+
+  columns = [
+    {
+      name: 'Country',
+      formatter: row => row.countryName,
+      alignRight: false
+    },
+    this.numericColumn('New', 'newCases'),
+    this.numericColumn('Deaths', 'deaths')
+  ]
+
+  columnClassName = column => column.alignRight ? 'text-right' : 'text-left';
+
   renderContent() {
     if (this.state) {
-      const byCountry = this.byCountry(this.state.data.filter(record =>
+      const byCountryCode = this.byCountryCode(this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate));
 
       return (
@@ -69,20 +87,15 @@ class App extends React.Component {
           />}
           <table className="table">
             <thead>
-              <tr>
-                <th>Country</th>
-                <th>New</th>
-                <th>Deaths</th>
-              </tr>
+              <tr>{this.columns.map((column, index) => <th className={this.columnClassName(column)} key={index}>{column.name}</th>)}</tr>
             </thead>
             <tbody>
-              {Object.values(byCountry)
-                .filter(value => value.newCases !== 0 || value.deaths !== 0)
-                .map(value => (
-                  <tr key={value.countryCode}>
-                    <td>{value.countryName}</td>
-                    <td>{new Intl.NumberFormat().format(value.newCases)}</td>
-                    <td>{new Intl.NumberFormat().format(value.deaths)}</td>
+              {Object.entries(byCountryCode)
+                .map(([key, value]) => (
+                  <tr key={key}>
+                    {this.columns.map((column, index) => (
+                      <td className={this.columnClassName(column)} key={index}>{column.formatter(value)}</td>
+                    ))}
                   </tr>
                 ))}
             </tbody>
@@ -99,7 +112,7 @@ class App extends React.Component {
       <div className="App container">
         <h1>COVID-19 by country</h1>
         {this.renderContent()}
-        <footer class="page-footer">
+        <footer className="page-footer">
           Site by <a href="https://blog.rmlowe.com/">Robert Lowe</a>;
           data from <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
         </footer>
