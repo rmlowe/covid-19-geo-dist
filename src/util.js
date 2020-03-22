@@ -188,7 +188,11 @@ const flags = {
   MS: '🇲🇸',
   NE: '🇳🇪',
   PG: '🇵🇬',
-  ZW: '🇿🇼'
+  ZW: '🇿🇼',
+  AO: '🇦🇴',
+  ER: '🇪🇷',
+  TL: '🇹🇱',
+  UG: '🇺🇬'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
