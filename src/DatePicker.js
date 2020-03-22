@@ -9,10 +9,10 @@ class DatePicker extends React.Component {
 
   render() {
     return <div>
-      <div className="row justify-content-between">
-        <div className="col-auto">
+      <div className="row justify-content-around">
+        <div className="col-auto my-1"><strong>
           {this.props.dateRange.startDate.toLocaleDateString()} &ndash; {this.props.dateRange.endDate.toLocaleDateString()}
-        </div>
+        </strong></div>
         <div className="col-auto">
           <button
             className="btn btn-primary py-0"

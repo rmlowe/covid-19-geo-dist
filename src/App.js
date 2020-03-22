@@ -3,11 +3,24 @@ import axios from 'axios';
 import parse from 'csv-parse';
 
 import DatePicker from './DatePicker';
+import Total from './Total';
 import CountrySummary from './CountrySummary';
 
 const minDate = data => new Date(Math.min(...data.map(record => record.date)));
 
 const maxDate = data => new Date(Math.max(...data.map(record => record.date)));
+
+const reducer = (acc, cur) => ({
+  countryName: acc.countryName,
+  newCases: acc.newCases + cur.newCases,
+  deaths: acc.deaths + cur.deaths
+});
+
+const reduceByKey = (arr, key, reducer) => arr.reduce((acc, cur) => {
+  const prevValue = acc[cur[key]];
+  acc[cur[key]] = prevValue ? reducer(prevValue, cur) : cur;
+  return acc;
+}, {});
 
 class App extends React.Component {
   async componentDidMount() {
@@ -32,22 +45,11 @@ class App extends React.Component {
     });
   }
 
-  byCountryCode(data) {
-    return data.reduce((acc, cur) => {
-      const prevValue = acc[cur.countryCode];
-      acc[cur.countryCode] = prevValue ? {
-        countryName: prevValue.countryName,
-        newCases: prevValue.newCases + cur.newCases,
-        deaths: prevValue.deaths + cur.deaths
-      } : cur;
-      return acc;
-    }, {});
-  }
-
   renderContent() {
     if (this.state) {
-      const byCountryCode = this.byCountryCode(this.state.data.filter(record =>
-        record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate));
+      const filtered = this.state.data.filter(record =>
+        record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate);
+      const totals = filtered.reduce(reducer);
 
       return (
         <div>
@@ -57,8 +59,16 @@ class App extends React.Component {
             minDate={minDate(this.state.data)}
             maxDate={maxDate(this.state.data)}
           />
-          <CountrySummary byCountryCode={byCountryCode} />
-        </div>
+          <div className="row justify-content-around py-1 border-top">
+            <div className="col-4">
+              <Total label="Total cases" value={totals.newCases} />
+            </div>
+            <div className="col-4">
+              <Total label="Total deaths" value={totals.deaths} />
+            </div>
+          </div>
+          <CountrySummary byCountryCode={reduceByKey(filtered, 'countryCode', reducer)} />
+        </div >
       );
     } else {
       return <p>Loading data ...</p>;
