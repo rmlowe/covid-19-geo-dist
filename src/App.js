@@ -4,31 +4,24 @@ import parse from 'csv-parse';
 
 import DatePicker from './DatePicker';
 import Total from './Total';
+import Chart from './Chart';
 import CountrySummary from './CountrySummary';
+import { casesReducer, reduceByKey } from './util';
 
 const minDate = data => new Date(Math.min(...data.map(record => record.date)));
 
 const maxDate = data => new Date(Math.max(...data.map(record => record.date)));
-
-const reducer = (acc, cur) => ({
-  countryName: acc.countryName,
-  newCases: acc.newCases + cur.newCases,
-  deaths: acc.deaths + cur.deaths
-});
-
-const reduceByKey = (arr, key, reducer) => arr.reduce((acc, cur) => {
-  const prevValue = acc[cur[key]];
-  acc[cur[key]] = prevValue ? reducer(prevValue, cur) : cur;
-  return acc;
-}, {});
 
 class App extends React.Component {
   async componentDidMount() {
     const response = await axios.get('/geodist.csv');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
+        const date = new Date(record[3], record[2] - 1, record[1]);
         return {
-          date: new Date(record[3], record[2] - 1, record[1]),
+          date,
+          dateString: date.toLocaleDateString(),
+          dateNumber: date.getTime(),
           countryName: record[6].replace(/_/g, ' '),
           countryCode: record[7],
           newCases: +record[4],
@@ -49,7 +42,7 @@ class App extends React.Component {
     if (this.state) {
       const filtered = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate);
-      const totals = filtered.reduce(reducer);
+      const totals = filtered.reduce(casesReducer);
 
       return (
         <div>
@@ -60,14 +53,15 @@ class App extends React.Component {
             maxDate={maxDate(this.state.data)}
           />
           <div className="row justify-content-around py-1 border-top">
-            <div className="col-4">
+            <div className="col-auto">
               <Total label="Total cases" value={totals.newCases} />
             </div>
-            <div className="col-4">
+            <div className="col-auto">
               <Total label="Total deaths" value={totals.deaths} />
             </div>
           </div>
-          <CountrySummary byCountryCode={reduceByKey(filtered, 'countryCode', reducer)} />
+          <Chart data={filtered} />
+          <CountrySummary byCountryCode={reduceByKey(filtered, 'countryCode', casesReducer)} />
         </div >
       );
     } else {

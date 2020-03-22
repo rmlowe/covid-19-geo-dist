@@ -9,7 +9,7 @@ class DatePicker extends React.Component {
 
   render() {
     return <div>
-      <div className="row justify-content-around">
+      <div className="row justify-content-between">
         <div className="col-auto my-1"><strong>
           {this.props.dateRange.startDate.toLocaleDateString()} &ndash; {this.props.dateRange.endDate.toLocaleDateString()}
         </strong></div>
@@ -22,12 +22,12 @@ class DatePicker extends React.Component {
           </button>
         </div>
       </div>
-      {this.state.datePickerVisible && <DateRange
+      {this.state.datePickerVisible && <div className="row justify-content-center"><div className="col-auto"><DateRange
         onChange={item => this.props.onChange(item.range1)}
         ranges={[this.props.dateRange]}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
-      />}
+      /></div></div>}
     </div>;
   }
 }
