@@ -1,3 +1,18 @@
+const casesReducer = (acc, cur) => ({
+  date: acc.date,
+  dateString: acc.dateString,
+  dateNumber: acc.dateNumber,
+  countryName: acc.countryName,
+  newCases: acc.newCases + cur.newCases,
+  deaths: acc.deaths + cur.deaths
+});
+
+const reduceByKey = (arr, key, reducer) => arr.reduce((acc, cur) => {
+  const prevValue = acc[cur[key]];
+  acc[cur[key]] = prevValue ? reducer(prevValue, cur) : cur;
+  return acc;
+}, {});
+
 const flags = {
   CN: '🇨🇳',
   IT: '🇮🇹',
@@ -176,4 +191,6 @@ const flags = {
   ZW: '🇿🇼'
 };
 
-export default countryCode => flags[countryCode];
+const countryCodeToFlag = countryCode => flags[countryCode];
+
+export { casesReducer, reduceByKey, countryCodeToFlag };
