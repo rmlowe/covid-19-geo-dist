@@ -28,21 +28,25 @@ class App extends React.Component {
           deaths: +record[5]
         };
       });
+      const selectedCountries = {};
+      data.forEach(record => selectedCountries[record.countryCode] = true);
       this.setState({
         dateRange: {
           startDate: minDate(data),
           endDate: maxDate(data)
         },
-        data
+        data,
+        selectedCountries
       });
     });
   }
 
   renderContent() {
     if (this.state) {
-      const filtered = this.state.data.filter(record =>
+      const filteredByDate = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate);
-      const totals = filtered.reduce(casesReducer);
+      const filteredByDateAndCountry = filteredByDate.filter(record => this.state.selectedCountries[record.countryCode]);
+      const totals = filteredByDateAndCountry.reduce(casesReducer, { newCases: 0, deaths: 0 });
 
       return (
         <div>
@@ -60,8 +64,12 @@ class App extends React.Component {
               <Total label="Total deaths" value={totals.deaths} />
             </div>
           </div>
-          <Chart data={filtered} />
-          <CountrySummary byCountryCode={reduceByKey(filtered, 'countryCode', casesReducer)} />
+          <Chart data={filteredByDateAndCountry} />
+          <CountrySummary
+            byCountryCode={reduceByKey(filteredByDate, 'countryCode', casesReducer)}
+            onChange={selectedCountries => this.setState({ selectedCountries })}
+            selectedCountries={this.state.selectedCountries}
+          />
         </div >
       );
     } else {
