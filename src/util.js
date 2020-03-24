@@ -1,7 +1,6 @@
 const casesReducer = (acc, cur) => ({
   date: acc.date,
   dateString: acc.dateString,
-  dateNumber: acc.dateNumber,
   countryName: acc.countryName,
   newCases: acc.newCases + cur.newCases,
   deaths: acc.deaths + cur.deaths

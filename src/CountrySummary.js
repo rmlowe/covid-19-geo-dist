@@ -13,11 +13,16 @@ const numericColumn = (name, propKey) => ({
 const columnClassName = column => column.alignRight ? 'text-right' : 'text-left';
 
 class CountrySummary extends React.Component {
-  doToggle = key => {
+  handler = callback => event => {
+    event.stopPropagation();
     const newSelectedCountries = { ...this.props.selectedCountries };
-    newSelectedCountries[key] = !newSelectedCountries[key];
+
+    for (const countryCode of Object.keys(this.props.byCountryCode)) {
+      newSelectedCountries[countryCode] = callback(countryCode, this.props.selectedCountries[countryCode]);
+    }
+
     this.props.onChange(newSelectedCountries);
-  };
+  }
 
   withAllVisibleSet = value => {
     const result = { ...this.props.selectedCountries };
@@ -29,9 +34,7 @@ class CountrySummary extends React.Component {
     return result;
   }
 
-  setAll = value => event => {
-    this.props.onChange(this.withAllVisibleSet(value));
-  };
+  setAll = value => this.handler((countryCode, oldVlue) => value);
 
   checkSingleRow = countryCode => event => {
     const newSelectedCountries = this.withAllVisibleSet(false);
@@ -68,7 +71,7 @@ class CountrySummary extends React.Component {
       formatter: (key, value) => (
         <i
           className={this.props.selectedCountries[key] ? 'fas fa-check-square' : 'far fa-square'}
-          onClick={event => { event.stopPropagation(); this.doToggle(key); }}
+          onClick={this.handler((countryCode, oldValue) => countryCode === key ? !oldValue : oldValue)}
         />
       ),
       alignRight: true
@@ -112,7 +115,7 @@ class CountrySummary extends React.Component {
         {Object.entries(this.props.byCountryCode)
           .sort(([key1, value1], [key2, value2]) => this.columns[this.state.sortedBy].comparator(value1, value2))
           .map(([key, value]) => (
-            <tr key={key} onClick={this.checkSingleRow(key)}>
+            <tr key={key} onClick={this.handler((countryCode, oldValue) => countryCode === key)}>
               {this.columns.map((column, index) => (
                 <td className={columnClassName(column)} key={index}>{column.formatter(key, value)}</td>
               ))}
