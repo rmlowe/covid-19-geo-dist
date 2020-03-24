@@ -19,18 +19,27 @@ class CountrySummary extends React.Component {
     this.props.onChange(newSelectedCountries);
   };
 
-  setAll = value => event => {
-    const newSelectedCountries = { ...this.props.selectedCountries };
+  withAllVisibleSet = value => {
+    const result = { ...this.props.selectedCountries };
 
     for (const key of Object.keys(this.props.byCountryCode)) {
-      newSelectedCountries[key] = value;
+      result[key] = value;
     }
 
-    this.props.onChange(newSelectedCountries);
+    return result;
+  }
+
+  setAll = value => event => {
+    this.props.onChange(this.withAllVisibleSet(value));
   };
 
+  checkSingleRow = countryCode => event => {
+    const newSelectedCountries = this.withAllVisibleSet(false);
+    newSelectedCountries[countryCode] = true;
+    this.props.onChange(newSelectedCountries);
+  }
+
   headerCheckBox = () => {
-    console.log('In headerCheckBox()');
     let hasChecked = false;
     let hasUnchecked = false;
 
@@ -59,7 +68,7 @@ class CountrySummary extends React.Component {
       formatter: (key, value) => (
         <i
           className={this.props.selectedCountries[key] ? 'fas fa-check-square' : 'far fa-square'}
-          onClick={event => this.doToggle(key)}
+          onClick={event => { event.stopPropagation(); this.doToggle(key); }}
         />
       ),
       alignRight: true
@@ -103,7 +112,7 @@ class CountrySummary extends React.Component {
         {Object.entries(this.props.byCountryCode)
           .sort(([key1, value1], [key2, value2]) => this.columns[this.state.sortedBy].comparator(value1, value2))
           .map(([key, value]) => (
-            <tr key={key}>
+            <tr key={key} onClick={this.checkSingleRow(key)}>
               {this.columns.map((column, index) => (
                 <td className={columnClassName(column)} key={index}>{column.formatter(key, value)}</td>
               ))}
