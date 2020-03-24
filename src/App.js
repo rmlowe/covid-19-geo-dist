@@ -8,9 +8,10 @@ import Chart from './Chart';
 import CountrySummary from './CountrySummary';
 import { casesReducer, reduceByKey } from './util';
 
-const minDate = data => new Date(Math.min(...data.map(record => record.date)));
-
-const maxDate = data => new Date(Math.max(...data.map(record => record.date)));
+const dateRange = data => {
+  const dates = data.map(record => record.date);
+  return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
+};
 
 class App extends React.Component {
   async componentDidMount() {
@@ -21,7 +22,6 @@ class App extends React.Component {
         return {
           date,
           dateString: date.toLocaleDateString(),
-          dateNumber: date.getTime(),
           countryName: record[6].replace(/_/g, ' '),
           countryCode: record[7],
           newCases: +record[4],
@@ -31,10 +31,7 @@ class App extends React.Component {
       const selectedCountries = {};
       data.forEach(record => selectedCountries[record.countryCode] = true);
       this.setState({
-        dateRange: {
-          startDate: minDate(data),
-          endDate: maxDate(data)
-        },
+        dateRange: dateRange(data),
         data,
         selectedCountries
       });
@@ -47,14 +44,15 @@ class App extends React.Component {
         record.date >= this.state.dateRange.startDate && record.date <= this.state.dateRange.endDate);
       const filteredByDateAndCountry = filteredByDate.filter(record => this.state.selectedCountries[record.countryCode]);
       const totals = filteredByDateAndCountry.reduce(casesReducer, { newCases: 0, deaths: 0 });
+      const theDateRange = dateRange(this.state.data);
 
       return (
         <div>
           <DatePicker
             dateRange={this.state.dateRange}
             onChange={dateRange => this.setState({ dateRange })}
-            minDate={minDate(this.state.data)}
-            maxDate={maxDate(this.state.data)}
+            minDate={theDateRange.startDate}
+            maxDate={theDateRange.endDate}
           />
           <div className="row justify-content-around py-1 border-top">
             <div className="col-auto">
@@ -64,7 +62,7 @@ class App extends React.Component {
               <Total label="Total deaths" value={totals.deaths} />
             </div>
           </div>
-          <Chart data={filteredByDateAndCountry} />
+          <Chart data={filteredByDateAndCountry} dateRange={this.state.dateRange} />
           <CountrySummary
             byCountryCode={reduceByKey(filteredByDate, 'countryCode', casesReducer)}
             onChange={selectedCountries => this.setState({ selectedCountries })}

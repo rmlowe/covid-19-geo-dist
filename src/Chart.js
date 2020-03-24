@@ -3,13 +3,30 @@ import { ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, L
 
 import { casesReducer, reduceByKey } from './util';
 
+const nextDate = date => {
+  const result = new Date(date);
+  result.setDate(date.getDate() + 1);
+  return result;
+}
+
+const datesInRange = ({ startDate, endDate }) => {
+  const result = [];
+  let currentDate = startDate;
+  while (currentDate <= endDate) {
+    result.push(currentDate);
+    currentDate = nextDate(currentDate);
+  }
+  return result;
+}
+
 const Chart = props => {
-  const byDate = Object.values(reduceByKey(props.data, 'date', casesReducer));
-  byDate.sort((a, b) => a.dateNumber - b.dateNumber);
+  const byDate = reduceByKey(props.data, 'date', casesReducer);
+  const data = datesInRange(props.dateRange)
+    .map(date => byDate[date] || { dateString: date.toLocaleDateString(), newCases: 0, deaths: 0 });
 
   return (
     <ResponsiveContainer width="100%" height={150}>
-      <AreaChart data={byDate} margin={{ top: 20 }}>
+      <AreaChart data={data} margin={{ top: 20 }}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
