@@ -196,7 +196,10 @@ const flags = {
   DM: '🇩🇲',
   GD: '🇬🇩',
   MZ: '🇲🇿',
-  SY: '🇸🇾'
+  SY: '🇸🇾',
+  GR: '🇬🇷',
+  VI: '🇻🇮',
+  BZ: '🇧🇿'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
