@@ -15,11 +15,12 @@ class DatePicker extends React.Component {
         </strong></div>
         <div className="col-auto">
           <button
-            className="btn btn-primary py-0"
+            className="btn btn-primary p-0"
             onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}
           >
-            {this.state.datePickerVisible ? 'Hide date picker' : 'Show date picker'}
+            {this.state.datePickerVisible ? 'Hide calendar' : 'Show calendar'}
           </button>
+          <button className="btn btn-primary p-0">Reset</button>
         </div>
       </div>
       {this.state.datePickerVisible && <div className="row justify-content-center"><div className="col-auto"><DateRange
