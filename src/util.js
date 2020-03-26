@@ -201,7 +201,12 @@ const flags = {
   BZ: '🇧🇿',
   LA: '🇱🇦',
   LY: '🇱🇾',
-  TC: '🇹🇨'
+  TC: '🇹🇨',
+  AW: '🇦🇼',
+  CW: '🇨🇼',
+  ML: '🇲🇱',
+  KN: '🇰🇳',
+  SX: '🇸🇽'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
