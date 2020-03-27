@@ -1,4 +1,4 @@
-dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterritoryCode,popData2018
+ï»¿dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterritoryCode,popData2018
 27/03/2020,27,3,2020,0,0,Afghanistan,AF,AFG,37172386
 26/03/2020,26,3,2020,33,0,Afghanistan,AF,AFG,37172386
 25/03/2020,25,3,2020,2,0,Afghanistan,AF,AFG,37172386
@@ -1615,11 +1615,11 @@ dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterrito
 15/03/2020,15,3,2020,0,0,Cuba,CU,CUB,11338138
 14/03/2020,14,3,2020,1,0,Cuba,CU,CUB,11338138
 12/03/2020,12,3,2020,3,0,Cuba,CU,CUB,11338138
-27/03/2020,27,3,2020,1,0,Curaçao,CW,CUW,159849
-26/03/2020,26,3,2020,0,1,Curaçao,CW,CUW,159849
-24/03/2020,24,3,2020,3,0,Curaçao,CW,CUW,159849
-20/03/2020,20,3,2020,2,0,Curaçao,CW,CUW,159849
-13/03/2020,13,3,2020,1,0,Curaçao,CW,CUW,159849
+27/03/2020,27,3,2020,1,0,CuraÃ§ao,CW,CUW,159849
+26/03/2020,26,3,2020,0,1,CuraÃ§ao,CW,CUW,159849
+24/03/2020,24,3,2020,3,0,CuraÃ§ao,CW,CUW,159849
+20/03/2020,20,3,2020,2,0,CuraÃ§ao,CW,CUW,159849
+13/03/2020,13,3,2020,1,0,CuraÃ§ao,CW,CUW,159849
 27/03/2020,27,3,2020,14,0,Cyprus,CY,CYP,1189265
 26/03/2020,26,3,2020,8,0,Cyprus,CY,CYP,1189265
 25/03/2020,25,3,2020,8,3,Cyprus,CY,CYP,1189265
