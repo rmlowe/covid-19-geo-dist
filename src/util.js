@@ -3,7 +3,8 @@ const casesReducer = (acc, cur) => ({
   dateString: acc.dateString,
   countryName: acc.countryName,
   newCases: acc.newCases + cur.newCases,
-  deaths: acc.deaths + cur.deaths
+  deaths: acc.deaths + cur.deaths,
+  population: acc.population
 });
 
 const reduceByKey = (arr, key, reducer) => arr.reduce((acc, cur) => {

@@ -22,7 +22,12 @@ const datesInRange = ({ startDate, endDate }) => {
 const Chart = props => {
   const byDate = reduceByKey(props.data, 'date', casesReducer);
   const data = datesInRange(props.dateRange)
-    .map(date => byDate[date] || { dateString: date.toLocaleDateString(), newCases: 0, deaths: 0 });
+    .map(date => byDate[date] || { dateString: date.toLocaleDateString(), newCases: 0, deaths: 0 })
+    .map(date => ({
+      dateString: date.dateString,
+      newCases: date.newCases / props.denominator,
+      deaths: date.deaths / props.denominator
+    }));
 
   return (
     <ResponsiveContainer width="100%" height={150}>
