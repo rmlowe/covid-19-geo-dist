@@ -211,7 +211,8 @@ const flags = {
   PF: '🇵🇫',
   AI: '🇦🇮',
   VG: '🇻🇬',
-  GW: '🇬🇼'
+  GW: '🇬🇼',
+  PR: '🇵🇷'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
