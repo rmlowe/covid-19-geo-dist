@@ -70,9 +70,9 @@ class App extends React.Component {
                 name="inlineRadioOptions"
                 id="absolute"
                 checked={!this.state.perMillion}
-                onClick={event => this.setState({ perMillion: false })}
+                onChange={event => this.setState({ perMillion: false })}
               />
-              <label className="form-check-label" for="absolute">Absolute counts</label>
+              <label className="form-check-label" htmlFor="absolute">Absolute counts</label>
             </div>
             <div className="form-check form-check-inline">
               <input
@@ -81,9 +81,9 @@ class App extends React.Component {
                 name="inlineRadioOptions"
                 id="perMillion"
                 checked={this.state.perMillion}
-                onClick={event => this.setState({ perMillion: true })}
+                onChange={event => this.setState({ perMillion: true })}
               />
-              <label className="form-check-label" for="perMillion">Counts per million people</label>
+              <label className="form-check-label" htmlFor="perMillion">Counts per million people</label>
             </div>
           </div>
           <div className="row justify-content-around py-1 border-top">
