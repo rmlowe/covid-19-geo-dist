@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import parse from 'csv-parse';
 
-import DatePicker from './DatePicker';
+import DateAndStylePicker from './DateAndStylePicker';
 import Total from './Total';
 import Chart from './Chart';
 import CountrySummary from './CountrySummary';
@@ -56,37 +56,14 @@ class App extends React.Component {
 
       return (
         <div>
-          <DatePicker
+          <DateAndStylePicker
             dateRange={this.state.dateRange}
-            onChange={dateRange => this.setState({ dateRange })}
+            onChange={state => this.setState(state)}
             minDate={theDateRange.startDate}
             maxDate={theDateRange.endDate}
+            perMillion={this.state.perMillion}
           />
-          <div className="border-top text-center">
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="absolute"
-                checked={!this.state.perMillion}
-                onChange={event => this.setState({ perMillion: false })}
-              />
-              <label className="form-check-label" htmlFor="absolute">Absolute counts</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="perMillion"
-                checked={this.state.perMillion}
-                onChange={event => this.setState({ perMillion: true })}
-              />
-              <label className="form-check-label" htmlFor="perMillion">Counts per million people</label>
-            </div>
-          </div>
-          <div className="row justify-content-around py-1 border-top">
+          <div className="row justify-content-around py-1">
             <div className="col-auto">
               <Total label="Total cases" value={totals.newCases / denom} />
             </div>
