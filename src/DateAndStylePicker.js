@@ -51,7 +51,7 @@ class DateAndStylePicker extends React.Component {
               { key: 'day', label: '1 day', startDate: this.props.maxDate },
               { key: 'week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
               { key: 'month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
-              { key: 'all', label: 'All time', startDate: this.props.minDate }
+              { key: 'all', label: 'Max', startDate: this.props.minDate }
             ].map(namedRange => {
               const active =
                 this.props.dateRange.startDate.getTime() === namedRange.startDate.getTime()
