@@ -215,7 +215,10 @@ const flags = {
   PR: '🇵🇷',
   MP: '🇲🇵',
   SS: '🇸🇸',
-  FK: '🇫🇰'
+  FK: '🇫🇰',
+  BW: '🇧🇼',
+  BI: '🇧🇮',
+  SL: '🇸🇱'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
