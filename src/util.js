@@ -218,7 +218,10 @@ const flags = {
   FK: '🇫🇰',
   BW: '🇧🇼',
   BI: '🇧🇮',
-  SL: '🇸🇱'
+  SL: '🇸🇱',
+  BL: '🇧🇱',
+  BLM: '🇧🇱',
+  BQ: '🇧🇶'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
