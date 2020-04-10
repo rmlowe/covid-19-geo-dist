@@ -31,7 +31,7 @@ class DateAndStylePicker extends React.Component {
               className={'btn btn-outline-secondary py-0 px-2' + (this.state.datePickerVisible ? ' active' : '')}
               onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}
             >
-              <i className="fas fa-calendar mr-1" /> Date picker
+              <i className="fas fa-calendar mr-1" /> Calendar
           </button>
           </div>
         </div>
@@ -76,8 +76,8 @@ class DateAndStylePicker extends React.Component {
         <div className="btn-group btn-block" role="group">
           {
             [
-              { key: 'absolute', label: 'Absolute counts', value: false },
-              { key: 'perMillion', label: 'Counts per million people', value: true }
+              { key: 'absolute', label: 'Absolute', value: false },
+              { key: 'perMillion', label: 'Per million people', value: true }
             ].map(countStyle =>
               <button
                 className={'btn btn-outline-secondary py-0' + (this.props.perMillion === countStyle.value ? ' active' : '')}
