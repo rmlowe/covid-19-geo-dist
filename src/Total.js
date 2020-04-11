@@ -2,7 +2,7 @@ import React from 'react';
 
 const Total = props => (
   <div>
-    <span className="text-muted">{props.label}:</span> <strong style={{ fontSize: '135%' }}>{new Intl.NumberFormat().format(props.value)}</strong>
+    <span className="text-muted">{props.label}:</span> <strong style={{ fontSize: '125%' }}>{new Intl.NumberFormat().format(props.value)}</strong>
   </div>
 );
 
