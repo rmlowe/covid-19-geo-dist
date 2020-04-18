@@ -1,0 +1,37 @@
+- pipeline: "Deploy Client"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "master"
+  ref_type: "BRANCH"
+  target_site_url: "https://foreignvir.us/"
+  trigger_condition: "ALWAYS"
+  actions:
+  - action: "Execute: npm run build"
+    type: "BUILD"
+    working_directory: "/buddy/covid-19-geo-dist"
+    docker_image_name: "library/node"
+    docker_image_tag: "10"
+    execute_commands:
+    - "npm install"
+    - "npm run build"
+    setup_commands:
+    - "npm install -g gulp grunt-cli"
+    volume_mappings:
+    - "/:/buddy/covid-19-geo-dist"
+    trigger_condition: "ALWAYS"
+    shell: "BASH"
+  - action: "Upload files to AWS S3/foreignvir.us"
+    type: "AMAZON_S3"
+    input_type: "BUILD_ARTIFACTS"
+    local_path: "/build"
+    bucket_name: "foreignvir.us"
+    acl: "PRIVATE"
+    integration_hash: "5e70ec83422f5a0c56b15988"
+  - action: "Purge cache at E6T4DNK7V5B8U"
+    type: "CLOUD_FRONT"
+    input_type: "SCM_REPOSITORY"
+    distribution_id: "E6T4DNK7V5B8U"
+    purge_all: true
+    purge_by_change_set_limit: 10
+    trigger_condition: "ALWAYS"
+    timeout: 0
+    integration_hash: "5e70ec83422f5a0c56b15988"
