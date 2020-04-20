@@ -22,8 +22,8 @@ class App extends React.Component {
         return {
           date,
           dateString: date.toLocaleDateString(),
-          countryName: record[6].replace(/_/g, ' '),
-          countryCode: record[7],
+          countryName: record[10].replace(/_/g, ' '),
+          countryCode: record[6],
           newCases: +record[4],
           deaths: +record[5],
           population: +record[9]
