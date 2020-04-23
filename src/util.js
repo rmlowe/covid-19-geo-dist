@@ -224,7 +224,8 @@ const flags = {
   BQ: '🇧🇶',
   MW: '🇲🇼',
   ST: '🇸🇹',
-  YE: '🇾🇪'
+  YE: '🇾🇪',
+  SH: '🇸🇭'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
