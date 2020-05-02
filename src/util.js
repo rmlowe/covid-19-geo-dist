@@ -226,7 +226,9 @@ const flags = {
   ST: '🇸🇹',
   YE: '🇾🇪',
   SH: '🇸🇭',
-  EH: '🇪🇭'
+  EH: '🇪🇭',
+  KM: '🇰🇲',
+  TJ: '🇹🇯'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
