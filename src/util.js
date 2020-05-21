@@ -228,7 +228,8 @@ const flags = {
   SH: '🇸🇭',
   EH: '🇪🇭',
   KM: '🇰🇲',
-  TJ: '🇹🇯'
+  TJ: '🇹🇯',
+  LS: '🇱🇸'
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
