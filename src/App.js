@@ -22,7 +22,7 @@ class App extends React.Component {
         return {
           date,
           dateString: date.toLocaleDateString(),
-          countryName: record[6].replace(/_/g, ' '),
+          countryName: record[6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
           countryCode: record[7],
           newCases: +record[4],
           deaths: +record[5],
