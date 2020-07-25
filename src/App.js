@@ -15,7 +15,9 @@ const dateRange = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    const response = await axios.get('/geodist.csv');
+    const url = '/geodist.csv';
+    // const url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv';
+    const response = await axios.get(url);
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
         const date = new Date(record[3], record[2] - 1, record[1]);
