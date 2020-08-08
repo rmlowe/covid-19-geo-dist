@@ -15,10 +15,7 @@ const dateRange = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    // const url = '/geodist.csv';
-    // const url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv';
-    const url = 'https://data.foreignvir.us/';
-    const response = await axios.get(url);
+    const response = await axios.get('https://data.foreignvir.us/');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
         const date = new Date(record[3], record[2] - 1, record[1]);
@@ -43,7 +40,7 @@ class App extends React.Component {
     });
   }
 
-  renderContent() {
+  render() {
     if (this.state) {
       const filteredByDate = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate
@@ -58,7 +55,7 @@ class App extends React.Component {
         : 1;
 
       return (
-        <div>
+        <>
           <DateAndStylePicker
             dateRange={this.state.dateRange}
             onChange={state => this.setState(state)}
@@ -81,24 +78,11 @@ class App extends React.Component {
             selectedCountries={this.state.selectedCountries}
             perMillion={this.state.perMillion}
           />
-        </div >
+        </>
       );
     } else {
       return <p>Loading data ...</p>;
     }
-  }
-
-  render() {
-    return (
-      <div className="App container">
-        <h1>COVID-19 by country</h1>
-        {this.renderContent()}
-        <footer className="page-footer">
-          Site by <a href="https://blog.rmlowe.com/">Robert Lowe</a>;
-          data from <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
-        </footer>
-      </div >
-    );
   }
 }
 
