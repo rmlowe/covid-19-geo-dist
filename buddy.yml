@@ -3,6 +3,8 @@
   ref_name: "master"
   ref_type: "BRANCH"
   target_site_url: "https://foreignvir.us/"
+  auto_clear_cache: true
+  fetch_all_refs: true
   trigger_condition: "ALWAYS"
   actions:
   - action: "Execute: npm run build"
