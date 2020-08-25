@@ -29,6 +29,7 @@ class App extends React.Component {
           population: +record[9]
         };
       });
+
       const selectedCountries = {};
       data.forEach(record => selectedCountries[record.countryCode] = true);
       this.setState({
