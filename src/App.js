@@ -89,7 +89,7 @@ class App extends React.Component {
         ? (Object.entries(byCountryCode).filter(([key, value]) => this.state.selectedCountries[key]).map(([key, value]) => value.population).reduce((a, b) => a + b) / 1000000)
         : 1;
       const smoothedParam = new URLSearchParams(this.props.location.search).get('smoothed');
-      const smoothed = smoothedParam !== null && smoothedParam.toUpperCase() === 'TRUE';
+      const smoothed = smoothedParam === null || smoothedParam.toUpperCase() === 'TRUE';
       const chartData = smoothed ?
         this.state.smoothed.filter(record => this.state.selectedCountries[record.countryCode]) :
         filteredByDateAndCountry;
