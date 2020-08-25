@@ -1,13 +1,7 @@
 import React from 'react';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area } from 'recharts';
 
-import { casesReducer, reduceByKey } from './util';
-
-const nextDate = date => {
-  const result = new Date(date);
-  result.setDate(date.getDate() + 1);
-  return result;
-}
+import { casesReducer, reduceByKey, nextDate } from './util';
 
 const datesInRange = ({ startDate, endDate }) => {
   const result = [];

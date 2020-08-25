@@ -234,4 +234,10 @@ const flags = {
 
 const countryCodeToFlag = countryCode => flags[countryCode];
 
-export { casesReducer, reduceByKey, countryCodeToFlag };
+const nextDate = date => {
+  const result = new Date(date);
+  result.setDate(date.getDate() + 1);
+  return result;
+}
+
+export { casesReducer, reduceByKey, countryCodeToFlag, nextDate };

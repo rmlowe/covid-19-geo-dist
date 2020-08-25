@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router";
 import axios from 'axios';
 import parse from 'csv-parse';
 
@@ -6,11 +7,45 @@ import DateAndStylePicker from './DateAndStylePicker';
 import Total from './Total';
 import Chart from './Chart';
 import CountrySummary from './CountrySummary';
-import { casesReducer, reduceByKey } from './util';
+import { casesReducer, reduceByKey, nextDate } from './util';
 
 const dateRange = data => {
   const dates = data.map(record => record.date);
   return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
+};
+
+const smoothed = data => {
+  const result = {};
+
+  for (const record of data) {
+    let date = record.date;
+
+    for (let i = 0; i < 7; i++) {
+      const key = date.toLocaleDateString() + '-' + record.countryCode;
+      const value = result[key] || {
+        date,
+        dateString: date.toLocaleDateString(),
+        countryName: record.countryName,
+        countryCode: record.countryCode,
+        newCases: 0,
+        deaths: 0,
+        population: record.population
+      };
+      result[key] = {
+        date: value.date,
+        dateString: value.dateString,
+        countryName: value.countryName,
+        countryCode: value.countryCode,
+        newCases: value.newCases + record.newCases / 7,
+        deaths: value.deaths + record.deaths / 7,
+        population: value.population
+      }
+      date = nextDate(date);
+    }
+    console.log(record.dateString + '-' + record.countryCode + '-' + record.date);
+  }
+
+  return Object.values(result);
 };
 
 class App extends React.Component {
@@ -35,7 +70,8 @@ class App extends React.Component {
         dateRange: dateRange(data),
         perMillion: false,
         data,
-        selectedCountries
+        selectedCountries,
+        smoothed: smoothed(data)
       });
     });
   }
@@ -53,6 +89,11 @@ class App extends React.Component {
       const denom = this.state.perMillion
         ? (Object.entries(byCountryCode).filter(([key, value]) => this.state.selectedCountries[key]).map(([key, value]) => value.population).reduce((a, b) => a + b) / 1000000)
         : 1;
+      const smoothedParam = new URLSearchParams(this.props.location.search).get('smoothed');
+      const smoothed = smoothedParam && smoothedParam.toUpperCase() === 'TRUE';
+      const chartData = smoothed ?
+        this.state.smoothed.filter(record => this.state.selectedCountries[record.countryCode]) :
+        filteredByDateAndCountry;
 
       return (
         <>
@@ -71,7 +112,11 @@ class App extends React.Component {
               <Total label="Total deaths" value={totals.deaths / denom} />
             </div>
           </div>
-          <Chart data={filteredByDateAndCountry} dateRange={this.state.dateRange} denominator={denom} />
+          <Chart
+            data={chartData}
+            dateRange={this.state.dateRange}
+            denominator={denom}
+          />
           <CountrySummary
             byCountryCode={Object.entries(byCountryCode)}
             onChange={selectedCountries => this.setState({ selectedCountries })}
@@ -86,4 +131,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
