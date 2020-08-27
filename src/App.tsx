@@ -9,8 +9,8 @@ import Chart from './Chart';
 import CountrySummary from './CountrySummary';
 import { casesReducer, reduceByKey, nextDate } from './util';
 
-const dateRange = data => {
-  const dates = data.map(record => record.date);
+const dateRange = (data: { date: Date }[]) => {
+  const dates = data.map(record => record.date.getTime());
   return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
 };
 
@@ -75,6 +75,8 @@ class App extends React.Component {
     });
   }
 
+  pusher = (smoothed: boolean) => () => { this.props.history.push(smoothed ? '/' : '/?smoothed=false') };
+
   render() {
     if (this.state) {
       const filteredByDate = this.state.data.filter(record =>
@@ -124,7 +126,7 @@ class App extends React.Component {
                   type="checkbox"
                   id="smoothed"
                   checked={smoothed}
-                  onChange={e => { this.props.history.push(`/?smoothed=${!smoothed}`) }}
+                  onChange={this.pusher(!smoothed)}
                 />
                 <label className="form-check-label" htmlFor="smoothed">
                   Show 7-day average
