@@ -123,10 +123,20 @@ class App extends React.Component {
     return { selectedCountries, smoothed };
   };
 
+  title = selectedCountries => {
+    const codes = Object.entries(selectedCountries).flatMap(([countryCode, selected]) => selected ? [countryCode] : []);
+    if (codes.length === Object.keys(selectedCountries).length) {
+      return 'COVID-19 worldwide';
+    } else if (codes.length === 1) {
+      return `COVID-19 in ${this.state.data.find(record => record.countryCode === codes[0]).countryName}`;
+    } else {
+      return `COVID-19 in ${codes.length} countries`;
+    }
+  };
+
   render() {
     if (this.state) {
       const { selectedCountries, smoothed } = this.urlState();
-      console.log(selectedCountries);
       const filteredByDate = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate
         && record.date <= this.state.dateRange.endDate
@@ -141,9 +151,12 @@ class App extends React.Component {
       const chartData = smoothed ?
         this.state.smoothed.filter(record => selectedCountries[record.countryCode]) :
         filteredByDateAndCountry;
+      const title = this.title(selectedCountries);
+      document.title = title;
 
       return (
         <>
+          <h1>{title}</h1>
           <DateAndStylePicker
             dateRange={this.state.dateRange}
             onChange={state => this.setState(state)}
@@ -189,7 +202,7 @@ class App extends React.Component {
         </>
       );
     } else {
-      return <p>Loading data ...</p>;
+      return <><h1>COVID-19 by country</h1><p>Loading data ...</p></>;
     }
   }
 }
