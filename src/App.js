@@ -105,21 +105,20 @@ class App extends React.Component {
     const selectedCountries = {};
 
     for (const record of this.state.data) {
-      selectedCountries[record.countryCode] = !includedCountries;
+      selectedCountries[record.countryCode] = includedCountries === null;
     }
 
-    if (includedCountries) {
-      for (const country of includedCountries.split(' ')) {
-        selectedCountries[country] = true;
+    const setSelections = (countries, value) => {
+      if (countries !== null) {
+        for (const country of countries.split(' ')) {
+          if (selectedCountries[country] !== undefined) {
+            selectedCountries[country] = value;
+          }
+        }
       }
-    }
-
-    if (excludedCountries) {
-      for (const country of excludedCountries.split(' ')) {
-        selectedCountries[country] = false;
-      }
-    }
-
+    };
+    setSelections(includedCountries, true);
+    setSelections(excludedCountries, false);
     return { selectedCountries, smoothed };
   };
 
@@ -156,7 +155,7 @@ class App extends React.Component {
 
       return (
         <>
-          <h1>{title}</h1>
+          <h1 className="h5 my-2 border-bottom">{title}</h1>
           <DateAndStylePicker
             dateRange={this.state.dateRange}
             onChange={state => this.setState(state)}
@@ -202,7 +201,7 @@ class App extends React.Component {
         </>
       );
     } else {
-      return <><h1>COVID-19 by country</h1><p>Loading data ...</p></>;
+      return <><h1 className="h5 my-2 border-bottom">COVID-19 by country</h1><p>Loading data ...</p></>;
     }
   }
 }
