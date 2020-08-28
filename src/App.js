@@ -14,6 +14,18 @@ const dateRange = data => {
   return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
 };
 
+const countryParams = selectedCountries => {
+  const nCountries = Object.keys(selectedCountries).length;
+  const includedCountries = Object.entries(selectedCountries).flatMap(([key, value]) => value ? [key] : []);
+  if (includedCountries.length === nCountries) {
+    return [];
+  } else if (includedCountries.length <= nCountries / 2) {
+    return [['includedCountries', includedCountries.join(' ')]];
+  } else {
+    return [['excludedCountries', Object.entries(selectedCountries).flatMap(([key, value]) => value ? [] : [key]).join(' ')]];
+  }
+};
+
 const smoothed = data => {
   const result = {};
 
@@ -63,35 +75,71 @@ class App extends React.Component {
           population: +record[9]
         };
       });
-      const selectedCountries = {};
-      data.forEach(record => selectedCountries[record.countryCode] = true);
       this.setState({
         dateRange: dateRange(data),
         perMillion: false,
         data,
-        selectedCountries,
         smoothed: smoothed(data)
       });
     });
   }
 
+  push = ({ selectedCountries, smoothed }) => {
+    const init = [];
+
+    init.push(...countryParams(selectedCountries));
+
+    if (!smoothed) {
+      init.push(['smoothed', 'false']);
+    }
+
+    this.props.history.push(init.length ? ('/?' + new URLSearchParams(init)) : '/');
+  };
+
+  urlState = () => {
+    const params = new URLSearchParams(this.props.location.search);
+    const smoothedParam = params.get('smoothed');
+    const smoothed = smoothedParam === null || smoothedParam.toUpperCase() === 'TRUE';
+    const includedCountries = params.get('includedCountries');
+    const excludedCountries = params.get('excludedCountries');
+    const selectedCountries = {};
+
+    for (const record of this.state.data) {
+      selectedCountries[record.countryCode] = !includedCountries;
+    }
+
+    if (includedCountries) {
+      for (const country of includedCountries.split(' ')) {
+        selectedCountries[country] = true;
+      }
+    }
+
+    if (excludedCountries) {
+      for (const country of excludedCountries.split(' ')) {
+        selectedCountries[country] = false;
+      }
+    }
+
+    return { selectedCountries, smoothed };
+  };
+
   render() {
     if (this.state) {
+      const { selectedCountries, smoothed } = this.urlState();
+      console.log(selectedCountries);
       const filteredByDate = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate
         && record.date <= this.state.dateRange.endDate
         && (record.population > 0 || !this.state.perMillion));
-      const filteredByDateAndCountry = filteredByDate.filter(record => this.state.selectedCountries[record.countryCode]);
+      const filteredByDateAndCountry = filteredByDate.filter(record => selectedCountries[record.countryCode]);
       const totals = filteredByDateAndCountry.reduce(casesReducer, { newCases: 0, deaths: 0 });
       const theDateRange = dateRange(this.state.data);
       const byCountryCode = reduceByKey(filteredByDate, 'countryCode', casesReducer);
       const denom = this.state.perMillion
-        ? (Object.entries(byCountryCode).filter(([key, value]) => this.state.selectedCountries[key]).map(([key, value]) => value.population).reduce((a, b) => a + b) / 1000000)
+        ? (Object.entries(byCountryCode).filter(([key, value]) => selectedCountries[key]).map(([key, value]) => value.population).reduce((a, b) => a + b) / 1000000)
         : 1;
-      const smoothedParam = new URLSearchParams(this.props.location.search).get('smoothed');
-      const smoothed = smoothedParam === null || smoothedParam.toUpperCase() === 'TRUE';
       const chartData = smoothed ?
-        this.state.smoothed.filter(record => this.state.selectedCountries[record.countryCode]) :
+        this.state.smoothed.filter(record => selectedCountries[record.countryCode]) :
         filteredByDateAndCountry;
 
       return (
@@ -124,7 +172,7 @@ class App extends React.Component {
                   type="checkbox"
                   id="smoothed"
                   checked={smoothed}
-                  onChange={e => { this.props.history.push(`/?smoothed=${!smoothed}`) }}
+                  onChange={() => this.push({ smoothed: !smoothed, selectedCountries })}
                 />
                 <label className="form-check-label" htmlFor="smoothed">
                   Show 7-day average
@@ -134,8 +182,8 @@ class App extends React.Component {
           </div>
           <CountrySummary
             byCountryCode={Object.entries(byCountryCode)}
-            onChange={selectedCountries => this.setState({ selectedCountries })}
-            selectedCountries={this.state.selectedCountries}
+            onChange={selectedCountries => this.push({ smoothed, selectedCountries })}
+            selectedCountries={selectedCountries}
             perMillion={this.state.perMillion}
           />
         </>
