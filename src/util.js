@@ -233,7 +233,7 @@ const flags = {
   SB: '🇸🇧',
   WF: '🇼🇫',
   MH: '🇲🇭',
-  VU: '🇻🇺'
+  VU: '🇻🇺'  // Arbitrary change to resolve Buddy silliness
 };
 
 const countryCodeToFlag = countryCode => flags[countryCode];
