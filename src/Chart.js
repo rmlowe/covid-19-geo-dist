@@ -3,19 +3,19 @@ import { ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, L
 
 import { casesReducer, reduceByKey, nextDate } from './util';
 
-const datesInRange = ({ startDate, endDate }) => {
+const datesInRange = ({ startDate, endDate }, interval) => {
   const result = [];
   let currentDate = startDate;
   while (currentDate <= endDate) {
     result.push(currentDate);
-    currentDate = nextDate(currentDate);
+    currentDate = nextDate(currentDate, interval);
   }
   return result;
 }
 
 const Chart = props => {
   const byDate = reduceByKey(props.data, 'date', casesReducer);
-  const data = datesInRange(props.dateRange)
+  const data = datesInRange(props.dateRange, props.interval)
     .map(date => byDate[date] || { dateString: date.toLocaleDateString(), newCases: 0, deaths: 0 })
     .map(date => ({
       dateString: date.dateString,

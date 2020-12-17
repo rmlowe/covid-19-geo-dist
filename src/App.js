@@ -52,7 +52,7 @@ const smoothed = data => {
         deaths: value.deaths + record.deaths / 7,
         population: value.population
       }
-      date = nextDate(date);
+      date = nextDate(date, 1);
     }
   }
 
@@ -61,18 +61,20 @@ const smoothed = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    const response = await axios.get('/data.csv');
+    const { online } = this.urlState();
+    const response = await axios.get(online ? 'https://data.foreignvir.us/casedistribution/csv/' : '/data.csv');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
-        const date = new Date(record[3], record[2] - 1, record[1]);
+        const dateRep = record[0];
+        const date = new Date(dateRep.slice(6), dateRep.slice(3, 5) - 1, dateRep.slice(0, 2));
         return {
           date,
           dateString: date.toLocaleDateString(),
-          countryName: record[6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
-          countryCode: record[7],
-          newCases: +record[4],
-          deaths: +record[5],
-          population: +record[9]
+          countryName: record[online ? 4 : 6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
+          countryCode: record[online ? 5 : 7],
+          newCases: +record[online ? 2 : 4],
+          deaths: +record[online ? 3 : 5],
+          population: +record[online ? 7 : 9]
         };
       });
       this.setState({
@@ -84,12 +86,16 @@ class App extends React.Component {
     });
   }
 
-  push = ({ selectedCountries, smoothed }) => {
+  push = ({ selectedCountries, smoothed, online }) => {
     const init = [];
 
     init.push(...countryParams(selectedCountries));
 
-    if (!smoothed) {
+    if (online) {
+      init.push(['online', 'true']);
+    }
+
+    if (!(smoothed || online)) {
       init.push(['smoothed', 'false']);
     }
 
@@ -98,14 +104,20 @@ class App extends React.Component {
 
   urlState = () => {
     const params = new URLSearchParams(this.props.location.search);
-    const smoothedParam = params.get('smoothed');
-    const smoothed = smoothedParam === null || smoothedParam.toUpperCase() === 'TRUE';
+    const getBoolean = (name, defaultValue) => {
+      const value = params.get(name);
+      return value === null ? defaultValue : value.toUpperCase() === 'TRUE';
+    };
+    const online = getBoolean('online', false);
+    const smoothed = (!online) && getBoolean('smoothed', true);
     const includedCountries = params.get('includedCountries');
     const excludedCountries = params.get('excludedCountries');
     const selectedCountries = {};
 
-    for (const record of this.state.data) {
-      selectedCountries[record.countryCode] = includedCountries === null;
+    if (this.state) {
+      for (const record of this.state.data) {
+        selectedCountries[record.countryCode] = includedCountries === null;
+      }
     }
 
     const setSelections = (countries, value) => {
@@ -119,7 +131,7 @@ class App extends React.Component {
     };
     setSelections(includedCountries, true);
     setSelections(excludedCountries, false);
-    return { selectedCountries, smoothed };
+    return { selectedCountries, smoothed, online };
   };
 
   title = selectedCountries => {
@@ -135,7 +147,7 @@ class App extends React.Component {
 
   render() {
     if (this.state) {
-      const { selectedCountries, smoothed } = this.urlState();
+      const { selectedCountries, smoothed, online } = this.urlState();
       const filteredByDate = this.state.data.filter(record =>
         record.date >= this.state.dateRange.startDate
         && record.date <= this.state.dateRange.endDate
@@ -162,6 +174,7 @@ class App extends React.Component {
             minDate={theDateRange.startDate}
             maxDate={theDateRange.endDate}
             perMillion={this.state.perMillion}
+            weekly={online}
           />
           <div className="row justify-content-around py-1">
             <div className="col-auto">
@@ -175,8 +188,9 @@ class App extends React.Component {
             data={chartData}
             dateRange={this.state.dateRange}
             denominator={denom}
+            interval={online ? 7 : 1}
           />
-          <div className="row py-1">
+          {!online && <div className="row py-1">
             <div className="col">
               <div className="form-check text-center">
                 <input
@@ -184,17 +198,17 @@ class App extends React.Component {
                   type="checkbox"
                   id="smoothed"
                   checked={smoothed}
-                  onChange={() => this.push({ smoothed: !smoothed, selectedCountries })}
+                  onChange={() => this.push({ smoothed: !smoothed, selectedCountries, online })}
                 />
                 <label className="form-check-label" htmlFor="smoothed">
                   Show 7-day average
                 </label>
               </div>
             </div>
-          </div>
+          </div>}
           <CountrySummary
             byCountryCode={Object.entries(byCountryCode)}
-            onChange={selectedCountries => this.push({ smoothed, selectedCountries })}
+            onChange={selectedCountries => this.push({ smoothed, selectedCountries, online })}
             selectedCountries={selectedCountries}
             perMillion={this.state.perMillion}
           />
