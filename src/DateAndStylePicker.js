@@ -19,6 +19,19 @@ const addMonths = (date, n) => {
 class DateAndStylePicker extends React.Component {
   state = { datePickerVisible: false };
 
+  dateRangePresets = () => this.props.weekly ? [
+    { key: '1week', label: '1 week', startDate: this.props.maxDate },
+    { key: '4weeks', label: '4 weeks', startDate: addDays(this.props.maxDate, -21) },
+    { key: '26weeks', label: '26 weeks', startDate: addDays(this.props.maxDate, -175) },
+    { key: 'max', label: 'Max', startDate: this.props.minDate }
+  ] : [
+      { key: '1day', label: '1 day', startDate: this.props.maxDate },
+      { key: '1week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
+      { key: '1month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
+      { key: '6month', label: '6 months', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
+      { key: 'max', label: 'Max', startDate: this.props.minDate }
+    ];
+
   render() {
     return <div className="row">
       <div className="col-xl-4">
@@ -47,13 +60,7 @@ class DateAndStylePicker extends React.Component {
       <div className="col-xl-5">
         <div className="btn-group btn-block" role="group">
           {
-            [
-              { key: '1day', label: '1 day', startDate: this.props.maxDate },
-              { key: '1week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
-              { key: '1month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
-              { key: '6month', label: '6 months', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
-              { key: 'max', label: 'Max', startDate: this.props.minDate }
-            ].map(namedRange => {
+            this.dateRangePresets().map(namedRange => {
               const active =
                 this.props.dateRange.startDate.getTime() === namedRange.startDate.getTime()
                 && this.props.dateRange.endDate.getTime() === this.props.maxDate.getTime();

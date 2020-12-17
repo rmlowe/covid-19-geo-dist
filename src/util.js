@@ -238,9 +238,9 @@ const flags = {
 
 const countryCodeToFlag = countryCode => flags[countryCode];
 
-const nextDate = date => {
+const nextDate = (date, n) => {
   const result = new Date(date);
-  result.setDate(date.getDate() + 1);
+  result.setDate(date.getDate() + (n || 1));
   return result;
 }
 
