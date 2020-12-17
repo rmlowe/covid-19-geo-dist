@@ -61,7 +61,7 @@ const smoothed = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    const response = await axios.get('https://data.foreignvir.us/casedistribution/csv/');
+    const response = await axios.get('/data.csv');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
         const date = new Date(record[3], record[2] - 1, record[1]);
