@@ -61,7 +61,7 @@ const smoothed = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    const response = await axios.get('https://data.foreignvir.us/casedistribution/csv/');
+    const response = await axios.get('https://data.foreignvir.us/' + this.urlState().dataset + '/csv/');
     parse(response.data, (err, output) => {
       const data = output.slice(1).map(record => {
         const date = new Date(record[3], record[2] - 1, record[1]);
@@ -104,8 +104,10 @@ class App extends React.Component {
     const excludedCountries = params.get('excludedCountries');
     const selectedCountries = {};
 
-    for (const record of this.state.data) {
-      selectedCountries[record.countryCode] = includedCountries === null;
+    if (this.state) {
+      for (const record of this.state.data) {
+        selectedCountries[record.countryCode] = includedCountries === null;
+      }
     }
 
     const setSelections = (countries, value) => {
@@ -119,7 +121,7 @@ class App extends React.Component {
     };
     setSelections(includedCountries, true);
     setSelections(excludedCountries, false);
-    return { selectedCountries, smoothed };
+    return { selectedCountries, smoothed, dataset: params.get('dataset') || 'casedistribution' };
   };
 
   title = selectedCountries => {
