@@ -9,6 +9,8 @@ import Chart from './Chart';
 import CountrySummary from './CountrySummary';
 import { casesReducer, reduceByKey, nextDate } from './util';
 
+const onlineDefault = true;
+
 const dateRange = data => {
   const dates = data.map(record => record.date);
   return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
@@ -91,8 +93,12 @@ class App extends React.Component {
 
     init.push(...countryParams(selectedCountries));
 
-    if (online) {
+    if (online && !onlineDefault) {
       init.push(['online', 'true']);
+    }
+
+    if (onlineDefault && !online) {
+      init.push(['offline', 'true']);
     }
 
     if (!(smoothed || online)) {
@@ -104,11 +110,11 @@ class App extends React.Component {
 
   urlState = () => {
     const params = new URLSearchParams(this.props.location.search);
-    const getBoolean = (name, defaultValue) => {
+    const getBoolean = (name, defaultValue = false) => {
       const value = params.get(name);
       return value === null ? defaultValue : value.toUpperCase() === 'TRUE';
     };
-    const online = getBoolean('online', false);
+    const online = onlineDefault ? (!getBoolean('offline')) : getBoolean('online');
     const smoothed = (!online) && getBoolean('smoothed', true);
     const includedCountries = params.get('includedCountries');
     const excludedCountries = params.get('excludedCountries');
