@@ -66,24 +66,30 @@ class App extends React.Component {
     const { online } = this.urlState();
     const response = await axios.get(online ? 'https://data.foreignvir.us/casedistribution/csv/' : '/data.csv');
     parse(response.data, (err, output) => {
-      const data = output.slice(1).map(record => {
-        const dateRep = record[0];
-        const date = new Date(dateRep.slice(6), dateRep.slice(3, 5) - 1, dateRep.slice(0, 2));
+      const dataRows = output.slice(1);
+      const toDate = row => {
+        const dateRep = row[0];
+        return new Date(dateRep.slice(6), dateRep.slice(3, 5) - 1, dateRep.slice(0, 2));
+      };
+      const weekly = dataRows.every(row => toDate(row).getDay() === 1);
+      const data = dataRows.map(record => {
+        const date = toDate(record);
         return {
           date,
           dateString: date.toLocaleDateString(),
-          countryName: record[online ? 4 : 6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
-          countryCode: record[online ? 5 : 7],
-          newCases: +record[online ? 2 : 4],
-          deaths: +record[online ? 3 : 5],
-          population: +record[online ? 7 : 9]
+          countryName: record[weekly ? 4 : 6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
+          countryCode: record[weekly ? 5 : 7],
+          newCases: +record[weekly ? 2 : 4],
+          deaths: +record[weekly ? 3 : 5],
+          population: +record[weekly ? 7 : 9]
         };
       });
       this.setState({
         dateRange: dateRange(data),
         perMillion: false,
         data,
-        smoothed: smoothed(data)
+        smoothed: weekly ? data : smoothed(data),
+        weekly
       });
     });
   }
@@ -180,7 +186,7 @@ class App extends React.Component {
             minDate={theDateRange.startDate}
             maxDate={theDateRange.endDate}
             perMillion={this.state.perMillion}
-            weekly={online}
+            weekly={this.state.weekly}
           />
           <div className="row justify-content-around py-1">
             <div className="col-auto">
@@ -194,9 +200,9 @@ class App extends React.Component {
             data={chartData}
             dateRange={this.state.dateRange}
             denominator={denom}
-            interval={online ? 7 : 1}
+            interval={this.state.weekly ? 7 : 1}
           />
-          {!online && <div className="row py-1">
+          {!this.state.weekly && <div className="row py-1">
             <div className="col">
               <div className="form-check text-center">
                 <input
