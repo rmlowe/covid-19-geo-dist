@@ -20,9 +20,8 @@ class DateAndStylePicker extends React.Component {
   state = { datePickerVisible: false };
 
   dateRangePresets = () => this.props.weekly ? [
-    { key: '1week', label: '1 week', startDate: this.props.maxDate },
-    { key: '4weeks', label: '4 weeks', startDate: addDays(this.props.maxDate, -21) },
-    { key: '26weeks', label: '26 weeks', startDate: addDays(this.props.maxDate, -175) },
+    ...[1, 4, 13, 26, 52].map(n =>
+      ({ key: n + 'weeks', label: n + 'W', startDate: addDays(this.props.maxDate, -((n - 1) * 7)) })),
     { key: 'max', label: 'Max', startDate: this.props.minDate }
   ] : [
       { key: '1day', label: '1 day', startDate: this.props.maxDate },
