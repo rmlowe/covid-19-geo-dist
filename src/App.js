@@ -22,9 +22,9 @@ const countryParams = selectedCountries => {
   if (includedCountries.length === nCountries) {
     return [];
   } else if (includedCountries.length <= nCountries / 2) {
-    return [['includedCountries', includedCountries.join(' ')]];
+    return [['includedCountries', includedCountries.join('~')]];
   } else {
-    return [['excludedCountries', Object.entries(selectedCountries).flatMap(([key, value]) => value ? [] : [key]).join(' ')]];
+    return [['excludedCountries', Object.entries(selectedCountries).flatMap(([key, value]) => value ? [] : [key]).join('~')]];
   }
 };
 
@@ -131,7 +131,7 @@ class App extends React.Component {
       init.push(['offline', 'true']);
     }
 
-    if (!(smoothed || online)) {
+    if (!smoothed) {
       init.push(['smoothed', 'false']);
     }
 
@@ -145,7 +145,7 @@ class App extends React.Component {
       return value === null ? defaultValue : value.toUpperCase() === 'TRUE';
     };
     const online = onlineDefault ? (!getBoolean('offline')) : getBoolean('online');
-    const smoothed = (!online) && getBoolean('smoothed', true);
+    const smoothed = getBoolean('smoothed', true);
     const includedCountries = params.get('includedCountries');
     const excludedCountries = params.get('excludedCountries');
     const selectedCountries = {};
@@ -158,7 +158,7 @@ class App extends React.Component {
 
     const setSelections = (countries, value) => {
       if (countries !== null) {
-        for (const country of countries.split(' ')) {
+        for (const country of countries.split('~')) {
           if (selectedCountries[country] !== undefined) {
             selectedCountries[country] = value;
           }
