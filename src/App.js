@@ -63,27 +63,51 @@ const smoothed = data => {
 
 class App extends React.Component {
   async componentDidMount() {
-    const { online } = this.urlState();
-    const response = await axios.get(online ? 'https://data.foreignvir.us/casedistribution/csv/' : '/data.csv');
+    // const { online } = this.urlState();
+    // const response = await axios.get(online ? 'https://data.foreignvir.us/casedistribution/csv/' : '/data.csv');
+    const response = await axios.get('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv');
     parse(response.data, (err, output) => {
+      const headerRow = output[0];
+
       const dataRows = output.slice(1);
-      const toDate = row => {
-        const dateRep = row[0];
-        return new Date(dateRep.slice(6), dateRep.slice(3, 5) - 1, dateRep.slice(0, 2));
-      };
-      const weekly = dataRows.every(row => toDate(row).getDay() === 1);
-      const data = dataRows.map(record => {
-        const date = toDate(record);
-        return {
-          date,
-          dateString: date.toLocaleDateString(),
-          countryName: record[weekly ? 4 : 6].replace(/_/g, ' ').replace(/CuraÃ§ao/g, 'Curaçao'),
-          countryCode: record[weekly ? 5 : 7],
-          newCases: +record[weekly ? 2 : 4],
-          deaths: +record[weekly ? 3 : 5],
-          population: +record[weekly ? 7 : 9]
-        };
+      // const toDate = row => {
+      //   const dateRep = row[0]; // dd/mm/yyyy
+      //   return new Date(dateRep.slice(6), dateRep.slice(3, 5) - 1, dateRep.slice(0, 2));
+      // };
+      // const weekly = dataRows.every(row => toDate(row).getDay() === 1);
+      const weekly = false;
+      const byDateAndCountry = {};
+      dataRows.forEach(record => {
+        const country = record[1];
+        let prevVal = 0;
+
+        for (let i = 4; i < headerRow.length; i++) {
+          const dateEnc = headerRow[i];
+          const key = dateEnc + '-' + country;
+
+          const newVal = +record[i]
+          const newCases = newVal - prevVal;
+          prevVal = newVal;
+          const value = byDateAndCountry[key];
+
+          if (value) {
+            value.newCases += newCases;
+          } else {
+            const dateParts = dateEnc.split('/');
+            const date = new Date('20' + dateParts[2], dateParts[0] - 1, dateParts[1]);
+            byDateAndCountry[key] = {
+              date,
+              dateString: date.toLocaleDateString(),
+              countryName: country,
+              countryCode: country,
+              newCases,
+              deaths: 0,
+              population: null
+            };
+          }
+        }
       });
+      const data = Object.values(byDateAndCountry);
       this.setState({
         dateRange: dateRange(data),
         perMillion: false,
