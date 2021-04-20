@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { countryCodeToFlag } from './util';
+// import { countryCodeToFlag } from './util';
 
 const numericColumn = (name, value) => ({
   name: () => name,
