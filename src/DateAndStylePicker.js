@@ -24,16 +24,16 @@ class DateAndStylePicker extends React.Component {
       ({ key: n + 'weeks', label: n + 'W', startDate: addDays(this.props.maxDate, -((n - 1) * 7)) })),
     { key: 'max', label: 'Max', startDate: this.props.minDate }
   ] : [
-      { key: '1day', label: '1 day', startDate: this.props.maxDate },
-      { key: '1week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
-      { key: '1month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
-      { key: '6month', label: '6 months', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
-      { key: 'max', label: 'Max', startDate: this.props.minDate }
-    ];
+    { key: '1day', label: '1 day', startDate: this.props.maxDate },
+    { key: '1week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
+    { key: '1month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
+    { key: '6month', label: '6 months', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
+    { key: 'max', label: 'Max', startDate: this.props.minDate }
+  ];
 
   render() {
     return <div className="row">
-      <div className="col-xl-4">
+      <div className="col-xl-5">
         <div className="row justify-content-between">
           <div className="col-auto font-weight-bold">
             {this.props.dateRange.startDate.toLocaleDateString()} &ndash; {this.props.dateRange.endDate.toLocaleDateString()}
@@ -56,7 +56,7 @@ class DateAndStylePicker extends React.Component {
           /></div></div>
         }
       </div>
-      <div className="col-xl-5">
+      <div className="col-xl-7">
         <div className="btn-group btn-block" role="group">
           {
             this.dateRangePresets().map(namedRange => {
@@ -79,7 +79,7 @@ class DateAndStylePicker extends React.Component {
           }
         </div>
       </div>
-      <div className="col-xl">
+      {/* <div className="col-xl">
         <div className="btn-group btn-block" role="group">
           {
             [
@@ -96,7 +96,7 @@ class DateAndStylePicker extends React.Component {
             )
           }
         </div>
-      </div>
+      </div> */}
     </div >;
   }
 }

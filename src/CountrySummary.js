@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { countryCodeToFlag } from './util';
+// import { countryCodeToFlag } from './util';
 
 const numericColumn = (name, value) => ({
   name: () => name,
@@ -65,8 +65,9 @@ class CountrySummary extends React.Component {
       {
         name: () => 'Country',
         formatter: (key, value) => {
-          const flag = countryCodeToFlag(key);
-          return flag ? flag + ' ' + value.countryName : (key + ' ' + value.countryName)
+          // const flag = countryCodeToFlag(key);
+          // return flag ? flag + ' ' + value.countryName : (key + ' ' + value.countryName);
+          return value.countryName;
         },
         alignRight: false,
         comparator: (a, b) => a.countryName.localeCompare(b.countryName),
