@@ -76,7 +76,8 @@ class App extends React.Component {
         const updateProperty = (output, property) => {
           const headerRow = output[0];
           output.slice(1).forEach(record => {
-            const country = record[1];
+            const province = record[0];
+            const country = ['Hong Kong', 'Macau'].includes(province) ? province : record[1];
             let prevVal = 0;
 
             for (let i = 4; i < headerRow.length; i++) {
