@@ -4,7 +4,7 @@ const Total = props => (
   <>
     <span className="text-muted">
       {props.label}:
-    </span> <strong style={{ fontSize: '105%' }}>
+    </span> <strong>
       {new Intl.NumberFormat().format(props.value)}
     </strong>
   </>
