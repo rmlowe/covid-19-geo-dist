@@ -1,3 +1,7 @@
+const countries = {
+  US: { flag: '🇺🇸', population: 328_200_000 }
+};
+
 const casesReducer = (acc, cur) => ({
   date: acc.date,
   dateString: acc.dateString,
@@ -245,4 +249,6 @@ const nextDate = (date, n) => {
   return result;
 }
 
-export { casesReducer, reduceByKey, countryCodeToFlag, nextDate };
+const countryInfo = countryName => countries[countryName];
+
+export { casesReducer, reduceByKey, countryCodeToFlag, nextDate, countryInfo };
