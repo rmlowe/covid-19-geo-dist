@@ -1,5 +1,19 @@
 const countries = {
-  US: { flag: '🇺🇸', population: 328_200_000 }
+  US: { flag: '🇺🇸', population: 328_200_000 },
+  India: { flag: '🇮🇳', population: 1_366_000_000 },
+  Brazil: { flag: '🇧🇷', population: 211_000_000 },
+  France: { flag: '🇫🇷', population: 67_060_000 },
+  Turkey: { flag: '🇹🇷', population: 82_000_000 },
+  Russia: { flag: '🇷🇺', population: 144_400_000 },
+  'United Kingdom': { flag: '🇬🇧', population: 66_650_000 },
+  Italy: { flag: '🇮🇹', population: 60_360_000 },
+  Spain: { flag: '🇪🇸', population: 46_940_000 },
+  Germany: { flag: '🇩🇪', population: 83_020_000 },
+  Argentina: { flag: '🇦🇷', population: 44_940_000 },
+  Colombia: { flag: '🇨🇴', population: 50_340_000 },
+  Poland: { flag: '🇵🇱', population: 37_970_000 },
+  Iran: { flag: '🇮🇷', population: 82_910_000 },
+  Mexico: { flag: '🇲🇽', population: 127_600_000 }
 };
 
 const casesReducer = (acc, cur) => ({
