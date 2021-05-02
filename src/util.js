@@ -13,7 +13,23 @@ const countries = {
   Colombia: { flag: '🇨🇴', population: 50_340_000 },
   Poland: { flag: '🇵🇱', population: 37_970_000 },
   Iran: { flag: '🇮🇷', population: 82_910_000 },
-  Mexico: { flag: '🇲🇽', population: 127_600_000 }
+  Mexico: { flag: '🇲🇽', population: 127_600_000 },
+  Ukraine: { flag: '🇺🇦', population: 44_390_000 },
+  Peru: { flag: '🇵🇪', population: 32_510_000 },
+  Indonesia: { flag: '🇮🇩', population: 270_600_000 },
+  Czechia: { flag: '🇨🇿', population: 10_650_000 },
+  'South Africa': { flag: '🇿🇦', population: 58_560_000 },
+  Netherlands: { flag: '🇳🇱', population: 17_280_000 },
+  Canada: { flag: '🇨🇦', population: 37_590_000 },
+  Chile: { flag: '🇨🇱', population: 18_950_000 },
+  Iraq: { flag: '🇮🇶', population: 39_310_000 },
+  Romania: { flag: '🇷🇴', population: 19_410_000 },
+  Philippines: { flag: '🇵🇭', population: 108_100_000 },
+  Belgium: { flag: '🇧🇪', population: 11_460_000 },
+  Sweden: { flag: '🇸🇪', population: 10_230_000 },
+  Israel: { flag: '🇮🇱', population: 9_053_000 },
+  Portugal: { flag: '🇵🇹', population: 10_280_000 },
+  Pakistan: { flag: '🇵🇰', population: 216_600_000 }
 };
 
 const casesReducer = (acc, cur) => ({
