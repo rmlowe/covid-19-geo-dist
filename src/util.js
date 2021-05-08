@@ -29,7 +29,28 @@ const countries = {
   Sweden: { flag: '🇸🇪', population: 10_230_000 },
   Israel: { flag: '🇮🇱', population: 9_053_000 },
   Portugal: { flag: '🇵🇹', population: 10_280_000 },
-  Pakistan: { flag: '🇵🇰', population: 216_600_000 }
+  Pakistan: { flag: '🇵🇰', population: 216_600_000 },
+  Hungary: { flag: '🇭🇺', population: 9_773_000 },
+  Bangladesh: { flag: '🇧🇩', population: 163_000_000 },
+  Jordan: { flag: '🇯🇴', population: 10_100_000 },
+  Serbia: { flag: '🇷🇸', population: 6_945_000 },
+  Switzerland: { flag: '🇨🇭', population: 8_545_000 },
+  Austria: { flag: '🇦🇹', population: 8_859_000 },
+  Japan: { flag: '🇯🇵', population: 126_300_000 },
+  Lebanon: { flag: '🇱🇧', population: 6_856_000 },
+  'United Arab Emirates': { flag: '🇦🇪', population: 9_771_000 },
+  Morocco: { flag: '🇲🇦', population: 36_470_000 },
+  'Saudi Arabia': { flag: '🇸🇦', population: 34_270_000 },
+  Malaysia: { flag: '🇲🇾', population: 31_950_000 },
+  Bulgaria: { flag: '🇧🇬', population: 7_000_000 },
+  Ecuador: { flag: '🇪🇨', population: 17_370_000 },
+  Kazakhstan: { flag: '🇰🇿', population: 18_510_000 },
+  Slovakia: { flag: '🇸🇰', population: 5_450_000 },
+  Nepal: { flag: '🇳🇵', population: 28_610_000 },
+  Panama: { flag: '🇵🇦', population: 4_246_000 },
+  Belarus: { flag: '🇧🇾', population: 9_467_000 },
+  Greece: { flag: '🇬🇷', population: 10_720_000 },
+  Croatia: { flag: '🇭🇷', population: 4_076_000 }
 };
 
 const casesReducer = (acc, cur) => ({
