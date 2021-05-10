@@ -79,7 +79,13 @@ const countries = {
   Libya: { flag: '🇱🇾', population: 6_777_000 },
   Nigeria: { flag: '🇳🇬', population: 201_000_000 },
   Kenya: { flag: '🇰🇪', population: 52_570_000 },
-  'North Macedonia': { flag: '🇲🇰', population: 2_077_000 }
+  'North Macedonia': { flag: '🇲🇰', population: 2_077_000 },
+  Burma: { flag: '🇲🇲', population: 54_050_000 },
+  Albania: { flag: '🇦🇱', population: 2_862_000 },
+  'Korea, South': { flag: '🇰🇷', population: 51_710_000 },
+  Estonia: { flag: '🇪🇪', population: 1_325_000 },
+  Algeria: { flag: '🇩🇿', population: 43_050_000 },
+  Latvia: { flag: '🇱🇻', population: 1_920_000 }
 };
 
 const casesReducer = (acc, cur) => ({
