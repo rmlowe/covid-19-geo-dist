@@ -92,7 +92,10 @@ const countries = {
   Kosovo: { flag: '🇽🇰', population: 1_873_000 },
   Montenegro: { flag: '🇲🇪', population: 622_137 },
   Kyrgyzstan: { flag: '🇰🇬', population: 6_457_000 },
-  Uzbekistan: { flag: '🇺🇿', population: 33_580_000 }
+  Uzbekistan: { flag: '🇺🇿', population: 33_580_000 },
+  Ghana: { flag: '🇬🇭', population: 30_420_000 },
+  Zambia: { flag: '🇿🇲', population: 17_860_000 },
+  China: { flag: '🇨🇳', population: 1_398_000_000 - (7_507_000 + 640_445) }
 };
 
 const casesReducer = (acc, cur) => ({
