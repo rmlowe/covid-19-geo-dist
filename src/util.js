@@ -85,7 +85,14 @@ const countries = {
   'Korea, South': { flag: '🇰🇷', population: 51_710_000 },
   Estonia: { flag: '🇪🇪', population: 1_325_000 },
   Algeria: { flag: '🇩🇿', population: 43_050_000 },
-  Latvia: { flag: '🇱🇻', population: 1_920_000 }
+  Latvia: { flag: '🇱🇻', population: 1_920_000 },
+  'Sri Lanka': { flag: '🇱🇰', population: 21_800_000 },
+  Norway: { flag: '🇳🇴', population: 5_328_000 },
+  Cuba: { flag: '🇨🇺', population: 11_330_000 },
+  Kosovo: { flag: '🇽🇰', population: 1_873_000 },
+  Montenegro: { flag: '🇲🇪', population: 622_137 },
+  Kyrgyzstan: { flag: '🇰🇬', population: 6_457_000 },
+  Uzbekistan: { flag: '🇺🇿', population: 33_580_000 }
 };
 
 const casesReducer = (acc, cur) => ({
