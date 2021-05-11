@@ -100,7 +100,13 @@ const countries = {
   Thailand: { flag: '🇹🇭', population: 69_630_000 },
   Cameroon: { flag: '🇨🇲', population: 25_880_000 },
   'El Salvador': { flag: '🇸🇻', population: 6_454_000 },
-  Mozambique: { flag: '🇲🇿', population: 30_370_000 }
+  Mozambique: { flag: '🇲🇿', population: 30_370_000 },
+  Cyprus: { flag: '🇨🇾', population: 875_899 },
+  Luxembourg: { flag: '🇱🇺', population: 613_894 },
+  Afghanistan: { flag: '🇦🇫', population: 38_040_000 },
+  Singapore: { flag: '🇸🇬', population: 5_704_000 },
+  Namibia: { flag: '🇳🇦', population: 2_495_000 },
+  Botswana: { flag: '🇧🇼', population: 2_304_000 }
 };
 
 const casesReducer = (acc, cur) => ({
