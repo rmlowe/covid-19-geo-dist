@@ -112,7 +112,13 @@ const countries = {
   Mongolia: { flag: '🇲🇳', population: 3_225_000 },
   Uganda: { flag: '🇺🇬', population: 44_270_000 },
   Senegal: { flag: '🇸🇳', population: 16_300_000 },
-  Madagascar: { flag: '🇲🇬', population: 26_970_000 }
+  Madagascar: { flag: '🇲🇬', population: 26_970_000 },
+  Zimbabwe: { flag: '🇿🇼', population: 14_650_000 },
+  Maldives: { flag: '🇲🇻', population: 530_953 },
+  Sudan: { flag: '🇸🇩', population: 42_810_000 },
+  Malawi: { flag: '🇲🇼', population: 18_630_000 },
+  Malta: { flag: '🇲🇹', population: 502_653 },
+  'Congo (Kinshasa)': { flag: '🇨🇩', population: 86_790_000 }
 };
 
 const casesReducer = (acc, cur) => ({
