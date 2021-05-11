@@ -106,7 +106,13 @@ const countries = {
   Afghanistan: { flag: '🇦🇫', population: 38_040_000 },
   Singapore: { flag: '🇸🇬', population: 5_704_000 },
   Namibia: { flag: '🇳🇦', population: 2_495_000 },
-  Botswana: { flag: '🇧🇼', population: 2_304_000 }
+  Botswana: { flag: '🇧🇼', population: 2_304_000 },
+  Jamaica: { flag: '🇯🇲', population: 2_948_000 },
+  "Cote d'Ivoire": { flag: '🇨🇮', population: 25_720_000 },
+  Mongolia: { flag: '🇲🇳', population: 3_225_000 },
+  Uganda: { flag: '🇺🇬', population: 44_270_000 },
+  Senegal: { flag: '🇸🇳', population: 16_300_000 },
+  Madagascar: { flag: '🇲🇬', population: 26_970_000 }
 };
 
 const casesReducer = (acc, cur) => ({
