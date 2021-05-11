@@ -95,7 +95,12 @@ const countries = {
   Uzbekistan: { flag: '🇺🇿', population: 33_580_000 },
   Ghana: { flag: '🇬🇭', population: 30_420_000 },
   Zambia: { flag: '🇿🇲', population: 17_860_000 },
-  China: { flag: '🇨🇳', population: 1_398_000_000 - (7_507_000 + 640_445) }
+  China: { flag: '🇨🇳', population: 1_398_000_000 - (7_507_000 + 640_445) },
+  Finland: { flag: '🇫🇮', population: 5_518_000 },
+  Thailand: { flag: '🇹🇭', population: 69_630_000 },
+  Cameroon: { flag: '🇨🇲', population: 25_880_000 },
+  'El Salvador': { flag: '🇸🇻', population: 6_454_000 },
+  Mozambique: { flag: '🇲🇿', population: 30_370_000 }
 };
 
 const casesReducer = (acc, cur) => ({
