@@ -142,7 +142,13 @@ const countries = {
   Haiti: { flag: '🇭🇹', population: 11_260_000 },
   Togo: { flag: '🇹🇬', population: 8_082_000 },
   Belize: { flag: '🇧🇿', population: 390_353 },
-  'Hong Kong': { flag: '🇭🇰', population: HONG_KONG_POPULATION }
+  'Hong Kong': { flag: '🇭🇰', population: HONG_KONG_POPULATION },
+  Djibouti: { flag: '🇩🇯', population: 973_560 },
+  'Congo (Brazzaville)': { flag: '🇨🇬', population: 5_381_000 },
+  Suriname: { flag: '🇸🇷', population: 581_363 },
+  Bahamas: { flag: '🇧🇸', population: 389_482 },
+  Lesotho: { flag: '🇱🇸', population: 2_125_000 },
+  'South Sudan': { flag: '🇸🇸', population: 11_060_000 }
 };
 
 const casesReducer = (acc, cur) => ({
