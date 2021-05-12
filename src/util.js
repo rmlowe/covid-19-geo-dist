@@ -118,7 +118,12 @@ const countries = {
   Sudan: { flag: '🇸🇩', population: 42_810_000 },
   Malawi: { flag: '🇲🇼', population: 18_630_000 },
   Malta: { flag: '🇲🇹', population: 502_653 },
-  'Congo (Kinshasa)': { flag: '🇨🇩', population: 86_790_000 }
+  'Congo (Kinshasa)': { flag: '🇨🇩', population: 86_790_000 },
+  Australia: { flag: '🇦🇺', population: 25_360_000 },
+  Angola: { flag: '🇦🇴', population: 31_830_000 },
+  'Cabo Verde': { flag: '🇨🇻', population: 549_935 },
+  Rwanda: { flag: '🇷🇼', population: 12_630_000 },
+  Gabon: { flag: '🇬🇦', population: 2_173_000 }
 };
 
 const casesReducer = (acc, cur) => ({
