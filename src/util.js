@@ -1,3 +1,5 @@
+const HONG_KONG_POPULATION = 7_507_000;
+
 const countries = {
   US: { flag: '🇺🇸', population: 328_200_000 },
   India: { flag: '🇮🇳', population: 1_366_000_000 },
@@ -95,7 +97,7 @@ const countries = {
   Uzbekistan: { flag: '🇺🇿', population: 33_580_000 },
   Ghana: { flag: '🇬🇭', population: 30_420_000 },
   Zambia: { flag: '🇿🇲', population: 17_860_000 },
-  China: { flag: '🇨🇳', population: 1_398_000_000 - (7_507_000 + 640_445) },
+  China: { flag: '🇨🇳', population: 1_398_000_000 - (HONG_KONG_POPULATION + 640_445) },
   Finland: { flag: '🇫🇮', population: 5_518_000 },
   Thailand: { flag: '🇹🇭', population: 69_630_000 },
   Cameroon: { flag: '🇨🇲', population: 25_880_000 },
@@ -136,7 +138,11 @@ const countries = {
   'Papua New Guinea': { flag: '🇵🇬', population: 8_776_000 },
   Andorra: { flag: '🇦🇩', population: 77_142 },
   'Burkina Faso': { flag: '🇧🇫', population: 20_320_000 },
-  Tajikistan: { flag: '🇹🇯', population: 9_321_000 }
+  Tajikistan: { flag: '🇹🇯', population: 9_321_000 },
+  Haiti: { flag: '🇭🇹', population: 11_260_000 },
+  Togo: { flag: '🇹🇬', population: 8_082_000 },
+  Belize: { flag: '🇧🇿', population: 390_353 },
+  'Hong Kong': { flag: '🇭🇰', population: HONG_KONG_POPULATION }
 };
 
 const casesReducer = (acc, cur) => ({
