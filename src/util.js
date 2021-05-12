@@ -148,7 +148,20 @@ const countries = {
   Suriname: { flag: '🇸🇷', population: 581_363 },
   Bahamas: { flag: '🇧🇸', population: 389_482 },
   Lesotho: { flag: '🇱🇸', population: 2_125_000 },
-  'South Sudan': { flag: '🇸🇸', population: 11_060_000 }
+  'South Sudan': { flag: '🇸🇸', population: 11_060_000 },
+  Seychelles: { flag: '🇸🇨', population: 97_625 },
+  Benin: { flag: '🇧🇯', population: 11_800_000 },
+  'Equatorial Guinea': { flag: '🇬🇶', population: 1_356_000 },
+  Nicaragua: { flag: '🇳🇮', population: 6_546_000 },
+  'Central African Republic': { flag: '🇨🇫', population: 4_745_000 },
+  Iceland: { flag: '🇮🇸', population: 356_991 },
+  Yemen: { flag: '🇾🇪', population: 29_160_000 },
+  Gambia: { flag: '🇬🇲', population: 2_348_000 },
+  Niger: { flag: '🇳🇪', population: 23_310_000 },
+  'San Marino': { flag: '🇸🇲', population: 33_860 },
+  Chad: { flag: '🇹🇩', population: 15_950_000 },
+  'Saint Lucia': { flag: '🇱🇨', population: 182_790 },
+  Burundi: { flag: '🇧🇮', population: 11_530_000 }
 };
 
 const casesReducer = (acc, cur) => ({
