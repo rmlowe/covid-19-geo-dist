@@ -161,7 +161,13 @@ const countries = {
   'San Marino': { flag: '🇸🇲', population: 33_860 },
   Chad: { flag: '🇹🇩', population: 15_950_000 },
   'Saint Lucia': { flag: '🇱🇨', population: 182_790 },
-  Burundi: { flag: '🇧🇮', population: 11_530_000 }
+  Burundi: { flag: '🇧🇮', population: 11_530_000 },
+  'Sierra Leone': { flag: '🇸🇱', population: 7_813_000 },
+  Barbados: { flag: '🇧🇧', population: 287_025 },
+  Comoros: { flag: '🇰🇲', population: 850_886 },
+  Eritrea: { flag: '🇪🇷', population: 3_214_000 },
+  'Guinea-Bissau': { flag: '🇬🇼', population: 1_921_000 },
+  Vietnam: { flag: '🇻🇳', population: 96_460_000 }
 };
 
 const casesReducer = (acc, cur) => ({
