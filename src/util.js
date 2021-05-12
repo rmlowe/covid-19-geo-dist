@@ -123,7 +123,20 @@ const countries = {
   Angola: { flag: '🇦🇴', population: 31_830_000 },
   'Cabo Verde': { flag: '🇨🇻', population: 549_935 },
   Rwanda: { flag: '🇷🇼', population: 12_630_000 },
-  Gabon: { flag: '🇬🇦', population: 2_173_000 }
+  Gabon: { flag: '🇬🇦', population: 2_173_000 },
+  Syria: { flag: '🇸🇾', population: 17_070_000 },
+  Guinea: { flag: '🇬🇳', population: 12_770_000 },
+  Cambodia: { flag: '🇰🇭', population: 16_490_000 },
+  Mauritania: { flag: '🇲🇷', population: 4_526_000 },
+  Eswatini: { flag: '🇸🇿', population: 1_148_000 },
+  Guyana: { flag: '🇬🇾', population: 782_766 },
+  Somalia: { flag: '🇸🇴', population: 15_440_000 },
+  Mali: { flag: '🇲🇱', population: 19_660_000 },
+  'Trinidad and Tobago': { flag: '🇹🇹', population: 1_395_000 },
+  'Papua New Guinea': { flag: '🇵🇬', population: 8_776_000 },
+  Andorra: { flag: '🇦🇩', population: 77_142 },
+  'Burkina Faso': { flag: '🇧🇫', population: 20_320_000 },
+  Tajikistan: { flag: '🇹🇯', population: 9_321_000 }
 };
 
 const casesReducer = (acc, cur) => ({
