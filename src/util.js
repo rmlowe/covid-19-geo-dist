@@ -167,7 +167,8 @@ const countries = {
   Comoros: { flag: '🇰🇲', population: 850_886 },
   Eritrea: { flag: '🇪🇷', population: 3_214_000 },
   'Guinea-Bissau': { flag: '🇬🇼', population: 1_921_000 },
-  Vietnam: { flag: '🇻🇳', population: 96_460_000 }
+  Vietnam: { flag: '🇻🇳', population: 96_460_000 },
+  'Timor-Leste': { flag: '🇹🇱', population: 1_293_000 }
 };
 
 const casesReducer = (acc, cur) => ({
