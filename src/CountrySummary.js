@@ -66,7 +66,7 @@ class CountrySummary extends React.Component {
         name: () => 'Country',
         formatter: (key, value) => {
           const info = countryInfo(value.countryName);
-          return info ? (info.flag + ' ' + value.countryName) : value.countryName;
+          return <>{info ? info.flag : <b>[MISSING FLAG]</b>} {value.countryName}</>;
         },
         alignRight: false,
         comparator: (a, b) => a.countryName.localeCompare(b.countryName),

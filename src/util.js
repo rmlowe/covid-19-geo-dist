@@ -1,4 +1,5 @@
 const HONG_KONG_POPULATION = 7_507_000;
+const MACAU_POPULATION = 640_445;
 
 const countries = {
   US: { flag: '🇺🇸', population: 328_200_000 },
@@ -97,7 +98,7 @@ const countries = {
   Uzbekistan: { flag: '🇺🇿', population: 33_580_000 },
   Ghana: { flag: '🇬🇭', population: 30_420_000 },
   Zambia: { flag: '🇿🇲', population: 17_860_000 },
-  China: { flag: '🇨🇳', population: 1_398_000_000 - (HONG_KONG_POPULATION + 640_445) },
+  China: { flag: '🇨🇳', population: 1_398_000_000 - (HONG_KONG_POPULATION + MACAU_POPULATION) },
   Finland: { flag: '🇫🇮', population: 5_518_000 },
   Thailand: { flag: '🇹🇭', population: 69_630_000 },
   Cameroon: { flag: '🇨🇲', population: 25_880_000 },
@@ -168,7 +169,33 @@ const countries = {
   Eritrea: { flag: '🇪🇷', population: 3_214_000 },
   'Guinea-Bissau': { flag: '🇬🇼', population: 1_921_000 },
   Vietnam: { flag: '🇻🇳', population: 96_460_000 },
-  'Timor-Leste': { flag: '🇹🇱', population: 1_293_000 }
+  'Timor-Leste': { flag: '🇹🇱', population: 1_293_000 },
+  Liechtenstein: { flag: '🇱🇮', population: 38_378 },
+  'New Zealand': { flag: '🇳🇿', population: 4_917_000 },
+  Monaco: { flag: '🇲🇨', population: 38_964 },
+  'Sao Tome and Principe': { flag: '🇸🇹', population: 215_056 },
+  Liberia: { flag: '🇱🇷', population: 4_937_000 },
+  'Saint Vincent and the Grenadines': { flag: '🇻🇨', population: 110_589 },
+  Laos: { flag: '🇱🇦', population: 7_169_000 },
+  Taiwan: { flag: '🇹🇼', population: 23_570_000 },
+  Mauritius: { flag: '🇲🇺', population: 1_266_000 },
+  Bhutan: { flag: '🇧🇹', population: 763_092 },
+  'Antigua and Barbuda': { flag: '🇦🇬', population: 97_118 },
+  'Diamond Princess': { flag: '🚢', population: 3_711 },
+  Tanzania: { flag: '🇹🇿', population: 58_010_000 },
+  Brunei: { flag: '🇧🇳', population: 433_285 },
+  Dominica: { flag: '🇩🇲', population: 71_808 },
+  Fiji: { flag: '🇫🇯', population: 889_953 },
+  Grenada: { flag: '🇬🇩', population: 112_003 },
+  Macau: { flag: '🇲🇴', population: MACAU_POPULATION },
+  'Saint Kitts and Nevis': { flag: '🇰🇳', population: 52_834 },
+  'Holy See': { flag: '🇻🇦', population: 825 },
+  'Solomon Islands': { flag: '🇸🇧', population: 669_823 },
+  'MS Zaandam': { flag: '🚢', population: 1_829 },
+  'Marshall Islands': { flag: '🇲🇭', population: 58_791 },
+  Vanuatu: { flag: '🇻🇺', population: 299_882 },
+  Samoa: { flag: '🇼🇸', population: 197_097 },
+  Micronesia: { flag: '🇫🇲', population: 113_815 }
 };
 
 const casesReducer = (acc, cur) => ({
