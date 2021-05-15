@@ -7,7 +7,7 @@ import DateAndStylePicker from './DateAndStylePicker';
 import Total from './Total';
 import Chart from './Chart';
 import CountrySummary from './CountrySummary';
-import { casesReducer, reduceByKey, nextDate } from './util';
+import { casesReducer, reduceByKey, nextDate, countryInfo } from './util';
 
 const onlineDefault = true;
 
@@ -94,6 +94,7 @@ class App extends React.Component {
               } else {
                 const dateParts = dateEnc.split('/');
                 const date = new Date('20' + dateParts[2], dateParts[0] - 1, dateParts[1]);
+                const info = countryInfo(country);
                 const v = {
                   date,
                   dateString: date.toLocaleDateString(),
@@ -101,7 +102,7 @@ class App extends React.Component {
                   countryCode: country,
                   newCases: 0,
                   deaths: 0,
-                  population: null
+                  population: info && info.population
                 };
                 v[property] += delta;
                 byDateAndCountry[key] = v;
@@ -196,9 +197,13 @@ class App extends React.Component {
       const totals = filteredByDateAndCountry.reduce(casesReducer, { newCases: 0, deaths: 0 });
       const theDateRange = dateRange(this.state.data);
       const byCountryCode = reduceByKey(filteredByDate, 'countryCode', casesReducer);
-      const denom = this.state.perMillion
-        ? (Object.entries(byCountryCode).filter(([key, value]) => selectedCountries[key]).map(([key, value]) => value.population).reduce((a, b) => a + b) / 1000000)
-        : 1;
+      const denom =
+        this.state.perMillion ? (
+          Object.entries(byCountryCode)
+            .filter(([key, value]) => selectedCountries[key])
+            .map(([key, value]) => value.population)
+            .reduce((a, b) => a + b, 0) / 1000000
+        ) : 1;
       const chartData = smoothed ?
         this.state.smoothed.filter(record => selectedCountries[record.countryCode]) :
         filteredByDateAndCountry;

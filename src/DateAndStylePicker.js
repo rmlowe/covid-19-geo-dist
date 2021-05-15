@@ -33,7 +33,7 @@ class DateAndStylePicker extends React.Component {
 
   render() {
     return <div className="row">
-      <div className="col-xl-5">
+      <div className="col-xl-4">
         <div className="row justify-content-between">
           <div className="col-auto font-weight-bold">
             {this.props.dateRange.startDate.toLocaleDateString()} &ndash; {this.props.dateRange.endDate.toLocaleDateString()}
@@ -56,7 +56,7 @@ class DateAndStylePicker extends React.Component {
           /></div></div>
         }
       </div>
-      <div className="col-xl-7">
+      <div className="col-xl-5">
         <div className="btn-group btn-block" role="group">
           {
             this.dateRangePresets().map(namedRange => {
@@ -79,7 +79,7 @@ class DateAndStylePicker extends React.Component {
           }
         </div>
       </div>
-      {/* <div className="col-xl">
+      <div className="col-xl">
         <div className="btn-group btn-block" role="group">
           {
             [
@@ -96,7 +96,7 @@ class DateAndStylePicker extends React.Component {
             )
           }
         </div>
-      </div> */}
+      </div>
     </div >;
   }
 }
