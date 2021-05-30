@@ -195,7 +195,8 @@ const countries = {
   'Marshall Islands': { flag: '🇲🇭', population: 58_791 },
   Vanuatu: { flag: '🇻🇺', population: 299_882 },
   Samoa: { flag: '🇼🇸', population: 197_097 },
-  Micronesia: { flag: '🇫🇲', population: 113_815 }
+  Micronesia: { flag: '🇫🇲', population: 113_815 },
+  Kiribati: { flag: '🇰🇮', population: 117_606 }
 };
 
 const casesReducer = (acc, cur) => ({
