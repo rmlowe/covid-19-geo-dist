@@ -196,7 +196,8 @@ const countries = {
   Vanuatu: { flag: '🇻🇺', population: 299_882 },
   Samoa: { flag: '🇼🇸', population: 197_097 },
   Micronesia: { flag: '🇫🇲', population: 113_815 },
-  Kiribati: { flag: '🇰🇮', population: 117_606 }
+  Kiribati: { flag: '🇰🇮', population: 117_606 },
+  Palau: { flag: '🇵🇼', population: 18_008 }
 };
 
 const casesReducer = (acc, cur) => ({
