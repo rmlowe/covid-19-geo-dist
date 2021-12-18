@@ -14,6 +14,7 @@
     docker_image_tag: "10"
     execute_commands:
     - "npm install"
+    - "npx browserslist --update-db"
     - "npm run build"
     setup_commands:
     - "npm install -g gulp grunt-cli"
