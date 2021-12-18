@@ -8,13 +8,19 @@ const addDays = (date, n) => {
   const result = new Date(date);
   result.setDate(date.getDate() + n);
   return result;
-}
+};
 
 const addMonths = (date, n) => {
   const result = new Date(date);
   result.setMonth(date.getMonth() + n);
   return result;
-}
+};
+
+const addYears = (date, n) => {
+  const result = new Date(date);
+  result.setFullYear(date.getFullYear() + n);
+  return result;
+};
 
 class DateAndStylePicker extends React.Component {
   state = { datePickerVisible: false };
@@ -24,10 +30,11 @@ class DateAndStylePicker extends React.Component {
       ({ key: n + 'weeks', label: n + 'W', startDate: addDays(this.props.maxDate, -((n - 1) * 7)) })),
     { key: 'max', label: 'Max', startDate: this.props.minDate }
   ] : [
-    { key: '1day', label: '1 day', startDate: this.props.maxDate },
-    { key: '1week', label: '1 week', startDate: addDays(this.props.maxDate, -6) },
-    { key: '1month', label: '1 month', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
-    { key: '6month', label: '6 months', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
+    { key: '1day', label: '1 D', startDate: this.props.maxDate },
+    { key: '1week', label: '1 W', startDate: addDays(this.props.maxDate, -6) },
+    { key: '1month', label: '1 M', startDate: addMonths(addDays(this.props.maxDate, 1), -1) },
+    { key: '6month', label: '6 M', startDate: addMonths(addDays(this.props.maxDate, 1), -6) },
+    { key: '1year', label: '1 Y', startDate: addYears(addDays(this.props.maxDate, 1), -1) },
     { key: 'max', label: 'Max', startDate: this.props.minDate }
   ];
 
@@ -44,7 +51,7 @@ class DateAndStylePicker extends React.Component {
               onClick={() => this.setState({ datePickerVisible: !this.state.datePickerVisible })}
             >
               <i className="fas fa-calendar mr-1" /> Calendar
-          </button>
+            </button>
           </div>
         </div>
         {

@@ -12,8 +12,11 @@ import { casesReducer, reduceByKey, nextDate, countryInfo } from './util';
 const onlineDefault = true;
 
 const dateRange = data => {
-  const dates = data.map(record => record.date);
-  return { startDate: new Date(Math.min(...dates)), endDate: new Date(Math.max(...dates)) }
+  const [startDate, endDate] = data
+    .map(record => record.date)
+    .reduce(([prevMin, prevMax], curr) => [curr < prevMin ? curr : prevMin, curr > prevMax ? curr : prevMax],
+      [Infinity, -Infinity]);
+  return { startDate, endDate };
 };
 
 const countryParams = selectedCountries => {

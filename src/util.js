@@ -198,7 +198,8 @@ const countries = {
   Micronesia: { flag: '🇫🇲', population: 113_815 },
   Kiribati: { flag: '🇰🇮', population: 117_606 },
   Palau: { flag: '🇵🇼', population: 18_008 },
-  'Summer Olympics 2020': { flag: '🏃', population: 11_091 }
+  'Summer Olympics 2020': { flag: '🏃', population: 11_091 },
+  Tonga: { flag: '🇹🇴', population: 105_697 }
 };
 
 const casesReducer = (acc, cur) => ({
