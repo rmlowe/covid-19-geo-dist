@@ -199,7 +199,9 @@ const countries = {
   Kiribati: { flag: '🇰🇮', population: 117_606 },
   Palau: { flag: '🇵🇼', population: 18_008 },
   'Summer Olympics 2020': { flag: '🏃', population: 11_091 },
-  Tonga: { flag: '🇹🇴', population: 105_697 }
+  Tonga: { flag: '🇹🇴', population: 105_697 },
+  Antarctica: { flag: '🇦🇶', population: 2_236 },
+  'Winter Olympics 2022': { flag: '⛷️', population: 2_871 }
 };
 
 const casesReducer = (acc, cur) => ({
