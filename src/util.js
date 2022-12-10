@@ -202,7 +202,9 @@ const countries = {
   Tonga: { flag: '🇹🇴', population: 105_697 },
   Antarctica: { flag: '🇦🇶', population: 2_236 },
   'Winter Olympics 2022': { flag: '⛷️', population: 2_871 },
-  'Korea, North': { flag: '🇰🇵', population: 25_780_000 }
+  'Korea, North': { flag: '🇰🇵', population: 25_780_000 },
+  'Nauru': { flag: '🇳🇷', population: 10_873 },
+  'Tuvalu': { flag: '🇹🇻', population: 11_925 }
 };
 
 const casesReducer = (acc, cur) => ({
